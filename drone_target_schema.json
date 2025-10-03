@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "drones": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "model": { "type": "string" },
+            "status": { "type": "string" }
+          },
+          "required": ["id", "model", "status"]
+        }
+      },
+      "photos": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "droneId": { "type": "string" },
+            "targetId": { "type": "string" },
+            "dateTime": { "type": "string", "format": "date-time" },
+            "fileSizeMB": { "type": "number" },
+            "resolution": { "type": "string" },
+            "format": { "type": "string" }
+          },
+          "required": ["id", "droneId", "targetId", "dateTime", "fileSizeMB"]
+        }
+      },
+      "totalFileSizeMB": { "type": "number" }
+    },
+    "required": ["drones", "photos", "totalFileSizeMB"]
+  }

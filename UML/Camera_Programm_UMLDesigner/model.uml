@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_WWiYgO0jEe-eCYe1ayCNgg" name="NewModel">
+  <packagedElement xmi:type="uml:Package" xmi:id="_dIyvcO0jEe-eCYe1ayCNgg" name="Package1"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_2m4TYO0jEe-eCYe1ayCNgg" name="FlyFoto">
+    <packagedElement xmi:type="uml:Class" xmi:id="_DnoM4O0kEe-eCYe1ayCNgg" name="Drone" visibility="public">
+      <ownedAttribute xmi:id="_joquMO0pEe-eCYe1ayCNgg" name="id" isID="true"/>
+      <ownedAttribute xmi:id="_rZVOIO0pEe-eCYe1ayCNgg" name="model"/>
+      <ownedAttribute xmi:id="_tVsNIO0pEe-eCYe1ayCNgg" name="status"/>
+      <ownedOperation xmi:id="_Sr0ykO0pEe-eCYe1ayCNgg" name="removePhoto"/>
+      <nestedClassifier xmi:type="uml:Class" xmi:id="_fydRoO0pEe-eCYe1ayCNgg" name="PhotoDatabase" visibility="public">
+        <ownedAttribute xmi:id="_fydRoe0pEe-eCYe1ayCNgg" name="id" isID="true">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_fydRou0pEe-eCYe1ayCNgg" value="1"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_fydRo-0pEe-eCYe1ayCNgg" name="model"/>
+        <ownedAttribute xmi:id="_fydRpO0pEe-eCYe1ayCNgg" name="status"/>
+        <ownedBehavior xmi:type="uml:Activity" xmi:id="_fydRpe0pEe-eCYe1ayCNgg" name="PhotoDatabase activity"/>
+        <ownedOperation xmi:id="_fydRpu0pEe-eCYe1ayCNgg"/>
+      </nestedClassifier>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_E7mWMO0kEe-eCYe1ayCNgg" name="Target" visibility="public">
+      <ownedAttribute xmi:id="_fge7YO0qEe-eCYe1ayCNgg" name="id" isID="true"/>
+      <ownedAttribute xmi:id="_fjTl4O0qEe-eCYe1ayCNgg" name="name"/>
+      <ownedAttribute xmi:id="_fnHH0O0qEe-eCYe1ayCNgg" name="type"/>
+      <ownedOperation xmi:id="_crIe4O0qEe-eCYe1ayCNgg" name="addPhoto"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_GDbg8O0kEe-eCYe1ayCNgg" name="Photo" visibility="public">
+      <ownedAttribute xmi:id="_7lXX4O0pEe-eCYe1ayCNgg" name="id" isID="true"/>
+      <ownedAttribute xmi:id="_7tmG0O0pEe-eCYe1ayCNgg" name="dateTime"/>
+      <ownedAttribute xmi:id="_7vN3cO0pEe-eCYe1ayCNgg" name="filePath"/>
+      <ownedOperation xmi:id="_LbHvoO0qEe-eCYe1ayCNgg" name="getData"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_H0TBoO0kEe-eCYe1ayCNgg" name="Coordinate" visibility="public">
+      <ownedAttribute xmi:id="_wWRCMO0pEe-eCYe1ayCNgg" name="latitude"/>
+      <ownedAttribute xmi:id="_wnR5sO0pEe-eCYe1ayCNgg" name="longitude"/>
+      <ownedAttribute xmi:id="_wsJyoO0pEe-eCYe1ayCNgg" name="altitude">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3ycf4O0pEe-eCYe1ayCNgg" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_MZNXQO0kEe-eCYe1ayCNgg" name="PhotoDatabase" visibility="public">
+      <ownedAttribute xmi:id="_h1LesO0mEe-eCYe1ayCNgg" name="id" isID="true">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_lcQTEO0mEe-eCYe1ayCNgg" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_l5KRgO0mEe-eCYe1ayCNgg" name="model"/>
+      <ownedAttribute xmi:id="_pajUoO0mEe-eCYe1ayCNgg" name="status"/>
+      <ownedBehavior xmi:type="uml:Activity" xmi:id="_SR5XAO0mEe-eCYe1ayCNgg" name="PhotoDatabase activity"/>
+      <ownedOperation xmi:id="_3HG5UO0oEe-eCYe1ayCNgg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_9x3ngO0wEe-eCYe1ayCNgg" memberEnd="_9x3nge0wEe-eCYe1ayCNgg _9x3nhO0wEe-eCYe1ayCNgg" navigableOwnedEnd="_9x3nge0wEe-eCYe1ayCNgg _9x3nhO0wEe-eCYe1ayCNgg">
+      <ownedEnd xmi:id="_9x3nge0wEe-eCYe1ayCNgg" name="targets" type="_E7mWMO0kEe-eCYe1ayCNgg" association="_9x3ngO0wEe-eCYe1ayCNgg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_9x3ngu0wEe-eCYe1ayCNgg" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_9x3ng-0wEe-eCYe1ayCNgg" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_9x3nhO0wEe-eCYe1ayCNgg" name="photos" type="_GDbg8O0kEe-eCYe1ayCNgg" association="_9x3ngO0wEe-eCYe1ayCNgg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_9x3nhe0wEe-eCYe1ayCNgg"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_9x3nhu0wEe-eCYe1ayCNgg" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_RGFNsO0yEe-eCYe1ayCNgg" memberEnd="_RGFNse0yEe-eCYe1ayCNgg _RGFNtO0yEe-eCYe1ayCNgg" navigableOwnedEnd="_RGFNse0yEe-eCYe1ayCNgg _RGFNtO0yEe-eCYe1ayCNgg">
+      <ownedEnd xmi:id="_RGFNse0yEe-eCYe1ayCNgg" name="photos" type="_GDbg8O0kEe-eCYe1ayCNgg" association="_RGFNsO0yEe-eCYe1ayCNgg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_RGFNsu0yEe-eCYe1ayCNgg" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_RGFNs-0yEe-eCYe1ayCNgg" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_RGFNtO0yEe-eCYe1ayCNgg" name="photoDatabases" type="_MZNXQO0kEe-eCYe1ayCNgg" association="_RGFNsO0yEe-eCYe1ayCNgg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_RGFNte0yEe-eCYe1ayCNgg" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_RGFNtu0yEe-eCYe1ayCNgg" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_SdRDEO0yEe-eCYe1ayCNgg" memberEnd="_SdRDEe0yEe-eCYe1ayCNgg _SdRDFO0yEe-eCYe1ayCNgg" navigableOwnedEnd="_SdRDEe0yEe-eCYe1ayCNgg _SdRDFO0yEe-eCYe1ayCNgg">
+      <ownedEnd xmi:id="_SdRDEe0yEe-eCYe1ayCNgg" name="photos" type="_GDbg8O0kEe-eCYe1ayCNgg" association="_SdRDEO0yEe-eCYe1ayCNgg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_SdRDEu0yEe-eCYe1ayCNgg" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_SdRDE-0yEe-eCYe1ayCNgg" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_SdRDFO0yEe-eCYe1ayCNgg" name="coordinates" type="_H0TBoO0kEe-eCYe1ayCNgg" association="_SdRDEO0yEe-eCYe1ayCNgg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_SdRDFe0yEe-eCYe1ayCNgg" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_SdRDFu0yEe-eCYe1ayCNgg" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_V6n6wO0yEe-eCYe1ayCNgg" memberEnd="_V6n6we0yEe-eCYe1ayCNgg _V6n6xO0yEe-eCYe1ayCNgg" navigableOwnedEnd="_V6n6we0yEe-eCYe1ayCNgg _V6n6xO0yEe-eCYe1ayCNgg">
+      <ownedEnd xmi:id="_V6n6we0yEe-eCYe1ayCNgg" name="drones" type="_DnoM4O0kEe-eCYe1ayCNgg" association="_V6n6wO0yEe-eCYe1ayCNgg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_V6n6wu0yEe-eCYe1ayCNgg" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_V6n6w-0yEe-eCYe1ayCNgg" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_V6n6xO0yEe-eCYe1ayCNgg" name="photos" type="_GDbg8O0kEe-eCYe1ayCNgg" association="_V6n6wO0yEe-eCYe1ayCNgg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_V6n6xe0yEe-eCYe1ayCNgg"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_V6n6xu0yEe-eCYe1ayCNgg" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+  </packagedElement>
+</uml:Model>

@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>Отчёт о фотографии дрона (SAX)</title>
+<style>
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 8px; text-align: center; border: 1px solid black; }
+th { background-color: #f2f2f2; }
+tbody tr:nth-child(odd) { background-color: #f9f9f9; }
+</style>
+</head>
+<body>
+<h1>Данные фотографий</h1>
+<table>
+<thead>
+<tr><th>Drone ID</th><th>Target ID</th><th>Date/Time</th><th>Latitude</th><th>Longitude</th><th>Altitude</th><th>File Path</th><th>File Size (MB)</th><th>File Size (Bytes)</th><th>Altitude × Size</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>d1</td><td>t1</td><td>2025-02-01T12:00:00Z</td><td>55,7600</td><td>37,6200</td><td>150,00</td><td>/photos/photo1.jpg</td><td>2,50</td><td>2621440</td><td>375,00</td>
+</tr>
+<tr>
+<td>d2</td><td>t2</td><td>2025-02-02T14:30:00Z</td><td>55,7600</td><td>37,6200</td><td>150,00</td><td>/photos/photo2.jpg</td><td>1,80</td><td>1887437</td><td>270,00</td>
+</tr>
+</tbody>
+<tfoot>
+<tr><td colspan='5'><strong>Средняя высота</strong></td><td><strong>150,00</strong></td><td colspan='4'></td></tr>
+<tr><td colspan='5'><strong>Сумма (Altitude × Size)</strong></td><td colspan='5'><strong>645,00</strong></td></tr>
+</tfoot>
+</table>
+</body></html>

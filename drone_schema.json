@@ -1,0 +1,68 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "DroneTarget",
+    "type": "object",
+    "properties": {
+      "drones": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {"type": "string"},
+            "model": {"type": "string"},
+            "status": {"type": "string"}
+          },
+          "required": ["id", "model", "status"]
+        }
+      },
+      "targets": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {"type": "string"},
+            "name": {"type": "string"},
+            "type": {"type": "string"},
+            "coordinates": {
+              "type": "object",
+              "properties": {
+                "latitude": {"type": "number"},
+                "longitude": {"type": "number"},
+                "altitude": {"type": "number"}
+              },
+              "required": ["latitude", "longitude", "altitude"]
+            }
+          },
+          "required": ["id", "name", "type", "coordinates"]
+        }
+      },
+      "photos": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "droneID": {"type": "string"},
+            "targetID": {"type": "string"},
+            "dateTime": {"type": "string"},
+            "filePath": {"type": "string"},
+            "photoMetadata": {
+              "type": "object",
+              "properties": {
+                "resolution": {"type": "string"},
+                "fileSize": {"type": "string"},
+                "format": {"type": "string"}
+              },
+              "required": ["resolution", "fileSize", "format"]
+            },
+            "altitudeTimesSize": {"type": "number"}
+          },
+          "required": ["droneID", "targetID", "dateTime", "filePath", "photoMetadata", "altitudeTimesSize"]
+        }
+      },
+      "averageAltitude": {
+        "type": "number"
+      }
+    },
+    "required": ["drones", "targets", "photos", "averageAltitude"]
+  }
+  
