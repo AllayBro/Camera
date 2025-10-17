@@ -15,7 +15,7 @@
     </Drone>
 
     <Drone id="d3" model="Varvar Despention" status="active">
-        <Model>Varvar Despention</Model>
+        <Model>DJI Phantom</Model>
         <Status>active</Status>
     </Drone>
 

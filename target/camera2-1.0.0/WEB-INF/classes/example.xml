@@ -2,24 +2,17 @@
 <DroneTarget xmlns="http://www.example.com/drone"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://www.example.com/drone drone_target.xsd">
-    <!-- Пример дрона -->
+
     <Drone id="d1" model="DJI Mavic" status="active">
         <Model>DJI Mavic</Model>
         <Status>active</Status>
     </Drone>
 
-    <!-- Еще один дрон -->
     <Drone id="d2" model="DJI Phantom" status="inactive">
         <Model>DJI Phantom</Model>
         <Status>inactive</Status>
     </Drone>
 
-    <Drone id="d3" model="Varvar Despention" status="active">
-        <Model>Varvar Despention</Model>
-        <Status>active</Status>
-    </Drone>
-
-    <!-- Пример цели -->
     <Target id="t1" name="Car" type="car">
         <Name>Car</Name>
         <Type>car</Type>
@@ -30,7 +23,6 @@
         </Coordinates>
     </Target>
 
-    <!-- Еще одна цель -->
     <Target id="t2" name="Building" type="building">
         <Name>Building</Name>
         <Type>building</Type>
@@ -41,11 +33,10 @@
         </Coordinates>
     </Target>
 
-    <!-- Пример фотографии -->
-    <Photo id="p1" droneID="d1" targetID="t1" dateTime="2025-02-01T12:00:00Z" filePath="/photos/photo1.jpg">
+    <Photo id="p1">
         <DroneID>d1</DroneID>
         <TargetID>t1</TargetID>
-        <DateTime>2023-10-01T12:00:00Z</DateTime>
+        <DateTime>2025-02-01T12:00:00Z</DateTime>
         <FilePath>/photos/photo1.jpg</FilePath>
         <PhotoMetadata>
             <Resolution>1920x1080</Resolution>
@@ -54,11 +45,10 @@
         </PhotoMetadata>
     </Photo>
 
-    <!-- Еще одна фотография -->
-    <Photo id="p2" droneID="d2" targetID="t2" dateTime="2025-02-02T14:30:00Z" filePath="/photos/photo2.jpg">
+    <Photo id="p2">
         <DroneID>d2</DroneID>
         <TargetID>t2</TargetID>
-        <DateTime>2023-10-02T14:30:00Z</DateTime>
+        <DateTime>2025-02-02T14:30:00Z</DateTime>
         <FilePath>/photos/photo2.jpg</FilePath>
         <PhotoMetadata>
             <Resolution>1280x720</Resolution>

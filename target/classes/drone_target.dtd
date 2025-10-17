@@ -1,0 +1,68 @@
+<!ELEMENT DroneTarget (Drone+, Target+, Photo+)>
+
+<!-- Элемент Drone -->
+<!ELEMENT Drone (Model, Status)>
+<!ATTLIST Drone
+    id ID #REQUIRED
+    model CDATA #REQUIRED
+    status (active|inactive) "active">
+
+<!-- Элемент Model -->
+<!ELEMENT Model (#PCDATA)>
+
+<!-- Элемент Status -->
+<!ELEMENT Status (#PCDATA)>
+
+<!-- Элемент Target -->
+<!ELEMENT Target (Name, Type, Coordinates)>
+<!ATTLIST Target
+    id ID #REQUIRED
+    name CDATA #REQUIRED
+    type (person|car|building) #REQUIRED>
+
+<!-- Элемент Name -->
+<!ELEMENT Name (#PCDATA)>
+
+<!-- Элемент Type -->
+<!ELEMENT Type (#PCDATA)>
+
+<!-- Элемент Coordinates -->
+<!ELEMENT Coordinates (Latitude, Longitude, Altitude)>
+<!ATTLIST Coordinates
+    precision CDATA #IMPLIED> <!-- Новая атрибутика -->
+
+<!-- Элемент Latitude -->
+<!ELEMENT Latitude (#PCDATA)>
+
+<!-- Элемент Longitude -->
+<!ELEMENT Longitude (#PCDATA)>
+
+<!-- Элемент Altitude -->
+<!ELEMENT Altitude (#PCDATA)>
+
+<!-- Элемент Photo -->
+<!ELEMENT Photo (DroneID, TargetID, DateTime, FilePath, PhotoMetadata)>
+<!ATTLIST Photo
+    id ID #REQUIRED
+    droneID IDREF #REQUIRED
+    targetID IDREF #REQUIRED
+    dateTime CDATA #REQUIRED
+    filePath CDATA #REQUIRED>
+
+<!-- Элемент DroneID -->
+<!ELEMENT DroneID (#PCDATA)>
+
+<!-- Элемент TargetID -->
+<!ELEMENT TargetID (#PCDATA)>
+
+<!-- Элемент DateTime -->
+<!ELEMENT DateTime (#PCDATA)>
+
+<!-- Элемент FilePath -->
+<!ELEMENT FilePath (#PCDATA)>
+
+<!-- Элемент PhotoMetadata -->
+<!ELEMENT PhotoMetadata (Resolution, FileSize, Format)>
+<!ELEMENT Resolution (#PCDATA)>
+<!ELEMENT FileSize (#PCDATA)>
+<!ELEMENT Format (#PCDATA)>
