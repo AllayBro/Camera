@@ -1,4 +1,4 @@
-package main.java;
+package org.example.camera;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,7 +14,6 @@ import org.xml.sax.SAXException;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-
 public class DronePhotoDOMAnalyzer {
 
     public static void main(String[] args) {

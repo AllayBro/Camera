@@ -1,17 +1,17 @@
-package main.java;
+package org.example.camera;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.Unmarshaller;
+import jakarta.xml.bind.annotation.*;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Schema;
 import javax.xml.XMLConstants;
 import org.xml.sax.SAXException;
-import javax.xml.bind.ValidationEvent;
-import javax.xml.bind.ValidationEventHandler;
+import jakarta.xml.bind.ValidationEvent;
+import jakarta.xml.bind.ValidationEventHandler;
 import java.io.*;
 import java.util.*;
 

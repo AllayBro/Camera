@@ -3,73 +3,160 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.3.5</version>
+    <relativePath/>
+  </parent>
+
   <groupId>org.example</groupId>
   <artifactId>camera2</artifactId>
   <version>1.0.0</version>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
 
   <properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
-    <!-- JAXB (оставляем javax.* как в коде анализаторов) -->
+    <!-- REST -->
     <dependency>
-      <groupId>javax.xml.bind</groupId>
-      <artifactId>jaxb-api</artifactId>
-      <version>2.3.1</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <!-- JAX-RS -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jersey</artifactId>
+    </dependency>
+
+    <!-- SOAP (Spring Web Services) -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web-services</artifactId>
+      <exclusions>
+        <!-- Убираем старый Saxon -->
+        <exclusion>
+          <groupId>net.sf.saxon</groupId>
+          <artifactId>saxon</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- Новый Saxon -->
+    <dependency>
+      <groupId>net.sf.saxon</groupId>
+      <artifactId>Saxon-HE</artifactId>
+      <version>12.4</version>
+    </dependency>
+
+    <!-- JAXB -->
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+      <version>4.0.2</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jaxb</groupId>
       <artifactId>jaxb-runtime</artifactId>
-      <version>2.3.5</version>
+      <version>4.0.5</version>
     </dependency>
 
-    <!-- Jackson -->
+    <!-- Apache ODE -->
+    <dependency>
+      <groupId>org.apache.ode</groupId>
+      <artifactId>ode-bpel-compiler</artifactId>
+      <version>1.3.8</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.ode</groupId>
+      <artifactId>ode-bpel-api</artifactId>
+      <version>1.3.8</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.ode</groupId>
+      <artifactId>ode-axis2</artifactId>
+      <version>1.3.8</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.axis2</groupId>
+          <artifactId>mex</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.ode</groupId>
+      <artifactId>ode-utils</artifactId>
+      <version>1.3.8</version>
+    </dependency>
+
+    <!-- wsdl4j -->
+    <dependency>
+      <groupId>wsdl4j</groupId>
+      <artifactId>wsdl4j</artifactId>
+      <version>1.6.3</version>
+    </dependency>
+
+    <!-- JSON -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>2.17.0</version>
     </dependency>
-
-    <!-- Jakarta REST API (GlassFish 7 содержит реализацию Jersey 3.x) -->
-    <dependency>
-      <groupId>jakarta.ws.rs</groupId>
-      <artifactId>jakarta.ws.rs-api</artifactId>
-      <version>3.1.0</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <!-- Gson -->
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
       <version>2.10.1</version>
     </dependency>
+
+    <!-- Swagger -->
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+      <version>2.5.0</version>
+    </dependency>
+
+    <!-- Tests -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
+  <repositories>
+    <repository>
+      <id>central</id>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+  </repositories>
+
   <build>
+    <finalName>camera2</finalName>
     <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.11.0</version>
         <configuration>
-          <source>${maven.compiler.source}</source>
-          <target>${maven.compiler.target}</target>
+          <release>${java.version}</release>
           <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
       </plugin>
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>3.4.0</version>
-        <configuration>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-        </configuration>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
       </plugin>
     </plugins>
   </build>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process name="DroneFineProcess"
+         targetNamespace="http://www.example.com/bpel"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:tns="http://www.example.com/bpel"
+         xmlns:dr="http://www.example.com/drone"
+         xmlns:svc="http://www.example.com/drone/service"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Импорт контракта SOAP-сервиса дронов -->
+    <import namespace="http://www.example.com/drone/service"
+            location="DroneServiceConcrete.wsdl"
+            importType="http://schemas.xmlsoap.org/wsdl/"/>
+
+    <!-- Определение партнёров -->
+    <partnerLinks>
+        <partnerLink name="client"
+                     partnerLinkType="tns:DroneFineLT"
+                     myRole="provider"/>
+        <partnerLink name="droneService"
+                     partnerLinkType="svc:DroneServiceLT"
+                     partnerRole="DroneServicePort"/>
+    </partnerLinks>
+
+    <!-- Определение переменных -->
+    <variables>
+        <variable name="request" messageType="tns:DroneFineRequestMessage"/>
+        <variable name="response" messageType="tns:DroneFineResponseMessage"/>
+        <variable name="droneData" element="dr:DroneTarget"/>
+    </variables>
+
+    <!-- Основная логика -->
+    <sequence>
+        <!-- Приём входного запроса -->
+        <receive partnerLink="client"
+                 portType="tns:DroneFinePT"
+                 operation="processDroneData"
+                 variable="request"
+                 createInstance="yes"/>
+
+        <!-- Вызов веб-сервиса DroneServicePort -->
+        <invoke partnerLink="droneService"
+                portType="svc:DroneServicePortType"
+                operation="GetDroneInfo"
+                inputVariable="request"
+                outputVariable="droneData"/>
+
+        <!-- Присвоение результата -->
+        <assign>
+            <copy>
+                <from variable="droneData"/>
+                <to variable="response"/>
+            </copy>
+        </assign>
+
+        <!-- Возврат клиенту -->
+        <reply partnerLink="client"
+               portType="tns:DroneFinePT"
+               operation="processDroneData"
+               variable="response"/>
+    </sequence>
+</process>

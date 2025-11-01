@@ -1,4 +1,5 @@
-package main.java;
+package org.example.camera;
+
 
 import java.io.File;
 import java.io.FileInputStream;

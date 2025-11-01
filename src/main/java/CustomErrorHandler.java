@@ -1,4 +1,4 @@
-package main.java;
+package org.example.camera;
 
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
