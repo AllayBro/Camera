@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.sun.com/jbi/descriptor/sun-binding-descriptor"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sun.com/jbi/descriptor/sun-binding-descriptor http://www.sun.com/jbi/descriptor/sun-binding-descriptor.xsd">
+
+    <service name="DroneFineProcessSOAPService"
+             namespace="http://www.example.com/bpel"
+             interface-name="http://www.example.com/bpel#wsdl.interface(DroneFinePT)"
+             service-name="DroneFineProcessSOAPService"
+             port-name="DroneFineProcessSOAPPort">
+        <endpoint-configuration>
+            <property name="wsdl-location">DroneFineProcessSOAP.wsdl</property>
+        </endpoint-configuration>
+    </service>
+
+</deploy>
+

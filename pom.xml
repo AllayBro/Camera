@@ -14,7 +14,7 @@
   <groupId>org.example</groupId>
   <artifactId>camera2</artifactId>
   <version>1.0.0</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
   <properties>
     <java.version>17</java.version>
@@ -34,17 +34,40 @@
       <artifactId>spring-boot-starter-jersey</artifactId>
     </dependency>
 
-    <!-- SOAP (Spring Web Services) -->
+    <!-- JAX-WS (Metro) -->
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web-services</artifactId>
-      <exclusions>
-        <!-- Убираем старый Saxon -->
-        <exclusion>
-          <groupId>net.sf.saxon</groupId>
-          <artifactId>saxon</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>com.sun.xml.ws</groupId>
+      <artifactId>jaxws-rt</artifactId>
+      <version>4.0.2</version>
+    </dependency>
+    
+    <!-- Jakarta XML Web Services API -->
+    <dependency>
+      <groupId>jakarta.xml.ws</groupId>
+      <artifactId>jakarta.xml.ws-api</artifactId>
+      <version>4.0.2</version>
+    </dependency>
+    
+    <!-- Jakarta SOAP with Attachments API -->
+    <dependency>
+      <groupId>jakarta.xml.soap</groupId>
+      <artifactId>jakarta.xml.soap-api</artifactId>
+      <version>3.0.2</version>
+    </dependency>
+    
+    <!-- EJB API (для сессионных компонентов) -->
+    <dependency>
+      <groupId>jakarta.ejb</groupId>
+      <artifactId>jakarta.ejb-api</artifactId>
+      <version>4.0.1</version>
+    </dependency>
+    
+    <!-- Jakarta Servlet API -->
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>6.1.0</version>
+      <scope>provided</scope>
     </dependency>
 
     <!-- Новый Saxon -->
@@ -151,6 +174,36 @@
           <release>${java.version}</release>
           <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
+      </plugin>
+      
+      <!-- JAX-WS Maven Plugin для генерации классов из WSDL -->
+      <plugin>
+        <groupId>com.sun.xml.ws</groupId>
+        <artifactId>jaxws-maven-plugin</artifactId>
+        <version>4.0.2</version>
+        <executions>
+          <execution>
+            <id>wsimport</id>
+            <goals>
+              <goal>wsimport</goal>
+            </goals>
+            <configuration>
+              <wsdlFiles>
+                <wsdlFile>${project.basedir}/src/main/resources/wsdl/DroneServiceConcrete.wsdl</wsdlFile>
+              </wsdlFiles>
+              <wsdlDirectory>${project.basedir}/src/main/resources/wsdl</wsdlDirectory>
+              <wsdlLocation>wsdl/DroneServiceConcrete.wsdl</wsdlLocation>
+              <packageName>org.example.camera.wsdl</packageName>
+              <sourceDestDir>${project.build.directory}/generated-sources/jaxws</sourceDestDir>
+              <staleFile>${project.build.directory}/jaxws/stale/DroneServiceConcrete.wsdl</staleFile>
+              <keep>true</keep>
+              <verbose>true</verbose>
+              <extension>true</extension>
+              <xnocompile>true</xnocompile>
+              <catalog>${project.basedir}/src/main/resources/wsdl/catalog.xml</catalog>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
 
       <plugin>

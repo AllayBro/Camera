@@ -4,6 +4,38 @@
            xmlns="http://www.example.com/drone"
            elementFormDefault="qualified">
 
+    <!-- Объявление элемента Photo должно быть перед его использованием -->
+    <xs:element name="Photo" maxOccurs="unbounded">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="DroneID" type="xs:IDREF"/>
+                <xs:element name="TargetID" type="xs:IDREF"/>
+                <xs:element name="DateTime" type="xs:dateTime"/>
+                <xs:element name="FilePath" type="xs:string"/>
+                <xs:element name="Coordinates" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Latitude" type="xs:decimal"/>
+                            <xs:element name="Longitude" type="xs:decimal"/>
+                            <xs:element name="Altitude" type="xs:decimal"/>
+                        </xs:sequence>
+                        <xs:attribute name="precision" type="xs:string" use="optional"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="PhotoMetadata">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Resolution" type="xs:string"/>
+                            <xs:element name="FileSize" type="xs:string"/>
+                            <xs:element name="Format" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="DroneTarget">
         <xs:complexType>
             <xs:sequence>
@@ -13,10 +45,15 @@
                         <xs:sequence>
                             <xs:element name="Model" type="xs:string"/>
                             <xs:element name="Status" type="xs:string"/>
+                            <xs:element name="Photos" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element ref="Photo" maxOccurs="unbounded"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
                         </xs:sequence>
                         <xs:attribute name="id" type="xs:ID" use="required"/>
-                        <xs:attribute name="model" type="xs:string" use="required"/>
-                        <xs:attribute name="status" type="xs:string" use="required"/>
                     </xs:complexType>
                 </xs:element>
 
@@ -35,31 +72,23 @@
                                     <xs:attribute name="precision" type="xs:string" use="optional"/>
                                 </xs:complexType>
                             </xs:element>
-                        </xs:sequence>
-                        <xs:attribute name="id" type="xs:ID" use="required"/>
-                        <xs:attribute name="name" type="xs:string" use="required"/>
-                        <xs:attribute name="type" type="xs:string" use="required"/>
-                    </xs:complexType>
-                </xs:element>
-
-                <xs:element name="Photo" maxOccurs="unbounded">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="DroneID" type="xs:IDREF"/>
-                            <xs:element name="TargetID" type="xs:IDREF"/>
-                            <xs:element name="DateTime" type="xs:dateTime"/>
-                            <xs:element name="FilePath" type="xs:string"/>
-                            <xs:element name="PhotoMetadata">
+                            <xs:element name="Photos" minOccurs="0">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="Resolution" type="xs:string"/>
-                                        <xs:element name="FileSize" type="xs:string"/>
-                                        <xs:element name="Format" type="xs:string"/>
+                                        <xs:element ref="Photo" maxOccurs="unbounded"/>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
                         <xs:attribute name="id" type="xs:ID" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                
+                <xs:element name="PhotoDatabase">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="Photo" maxOccurs="unbounded"/>
+                        </xs:sequence>
                     </xs:complexType>
                 </xs:element>
 

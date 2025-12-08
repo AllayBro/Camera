@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="http://www.example.com/drone/service"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://www.example.com/drone/service"
+             name="DroneServiceConcrete">
+
+    <!-- Импорт абстрактного WSDL -->
+    <import namespace="http://www.example.com/drone/service" 
+            location="DroneServiceAbstract.wsdl"/>
+
+    <!-- Привязка -->
+    <binding name="DroneServiceBinding" type="tns:DroneServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        
+        <operation name="GetDroneInfo">
+            <soap:operation soapAction="http://www.example.com/drone/service/GetDroneInfo"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="InvalidDroneIdFault">
+                <soap:fault name="InvalidDroneIdFault" use="literal"/>
+            </fault>
+            <fault name="ServiceUnavailableFault">
+                <soap:fault name="ServiceUnavailableFault" use="literal"/>
+            </fault>
+        </operation>
+        
+        <operation name="RegisterFine">
+            <soap:operation soapAction="http://www.example.com/drone/service/RegisterFine"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="ValidationFault">
+                <soap:fault name="ValidationFault" use="literal"/>
+            </fault>
+            <fault name="ServiceUnavailableFault">
+                <soap:fault name="ServiceUnavailableFault" use="literal"/>
+            </fault>
+        </operation>
+        
+        <operation name="GetFines">
+            <soap:operation soapAction="http://www.example.com/drone/service/GetFines"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="InvalidDroneIdFault">
+                <soap:fault name="InvalidDroneIdFault" use="literal"/>
+            </fault>
+            <fault name="ServiceUnavailableFault">
+                <soap:fault name="ServiceUnavailableFault" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+
+    <!-- Сервис -->
+    <service name="DroneService">
+        <port name="DroneServicePort" binding="tns:DroneServiceBinding">
+            <soap:address location="http://localhost:8090/camera2/DroneService"/>
+        </port>
+    </service>
+
+</definitions>
+

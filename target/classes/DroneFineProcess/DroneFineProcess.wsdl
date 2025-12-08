@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="http://www.example.com/bpel"
+             xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:dr="http://www.example.com/drone"
+             targetNamespace="http://www.example.com/bpel"
+             name="DroneFineProcess">
+
+    <!-- Импорт схемы дронов -->
+    <types>
+        <xsd:schema targetNamespace="http://www.example.com/bpel"
+                    xmlns:tns="http://www.example.com/bpel"
+                    xmlns:dr="http://www.example.com/drone">
+            <xsd:import namespace="http://www.example.com/drone"
+                       schemaLocation="drone_target.xsd"/>
+            
+            <!-- Сообщения для BPEL процесса -->
+            <xsd:element name="DroneFineRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="droneId" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="DroneFineResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="droneInfo" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <!-- Сообщения об ошибках -->
+            <xsd:element name="ServiceFault">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="message" type="xsd:string"/>
+                        <xsd:element name="errorCode" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="ValidationFault">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="message" type="xsd:string"/>
+                        <xsd:element name="field" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <!-- Сообщения -->
+    <message name="DroneFineRequestMessage">
+        <part name="parameters" element="tns:DroneFineRequest"/>
+    </message>
+    
+    <message name="DroneFineResponseMessage">
+        <part name="parameters" element="tns:DroneFineResponse"/>
+    </message>
+    
+    <!-- Fault сообщения -->
+    <message name="ServiceFaultMessage">
+        <part name="fault" element="tns:ServiceFault"/>
+    </message>
+    
+    <message name="ValidationFaultMessage">
+        <part name="fault" element="tns:ValidationFault"/>
+    </message>
+
+    <!-- Тип порта -->
+    <portType name="DroneFinePT">
+        <operation name="processDroneData">
+            <input message="tns:DroneFineRequestMessage"/>
+            <output message="tns:DroneFineResponseMessage"/>
+            <fault name="ServiceFault" message="tns:ServiceFaultMessage"/>
+            <fault name="ValidationFault" message="tns:ValidationFaultMessage"/>
+        </operation>
+    </portType>
+
+    <!-- Partner Link Types -->
+    <plnk:partnerLinkType name="DroneFineLT">
+        <plnk:role name="provider">
+            <plnk:portType name="tns:DroneFinePT"/>
+        </plnk:role>
+    </plnk:partnerLinkType>
+
+    <!-- Привязка -->
+    <binding name="DroneFineBinding" type="tns:DroneFinePT">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="processDroneData">
+            <soap:operation soapAction="http://www.example.com/bpel/processDroneData"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="ServiceFault">
+                <soap:fault name="ServiceFault" use="literal"/>
+            </fault>
+            <fault name="ValidationFault">
+                <soap:fault name="ValidationFault" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+
+    <!-- Сервис -->
+    <service name="DroneFineProcessService">
+        <port name="DroneFineProcessPort" binding="tns:DroneFineBinding">
+            <soap:address location="http://localhost:8080/ode/processes/DroneFineProcess"/>
+        </port>
+    </service>
+
+</definitions>
+

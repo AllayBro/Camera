@@ -1,0 +1,16 @@
+meta {
+  name: SOAP
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:8090/camera2/ws/droneService.wsdl
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="http://www.example.com/file"
+             xmlns:bpel="http://www.example.com/bpel"
+             xmlns:file="http://www.sun.com/jbi/descriptor/file"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:dr="http://www.example.com/drone"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             targetNamespace="http://www.example.com/file"
+             name="FileBindingService">
+
+    <!-- Импорт WSDL BPEL процесса -->
+    <import namespace="http://www.example.com/bpel" 
+            location="../DroneFineProcess/DroneFineProcess.wsdl"/>
+
+    <!-- File Binding для BPEL процесса -->
+    <binding name="FileProcessBinding" type="bpel:DroneFinePT">
+        <file:binding/>
+        <operation name="processDroneData">
+            <file:operation/>
+            <input>
+                <file:message fileName="input_%d.xml" 
+                             fileNameIsPattern="true"
+                             pollingInterval="1000"
+                             multipleRecordsPerFile="false"/>
+            </input>
+            <output>
+                <file:message fileName="output_%t.xml"
+                             fileNameIsPattern="true"
+                             multipleRecordsPerFile="false"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="FileProcessService">
+        <port name="FileProcessPort" binding="tns:FileProcessBinding">
+            <file:address fileDirectory="file_bc_data"
+                         relativePath="true"
+                         pathRelativeTo="Current Working Dir"/>
+        </port>
+    </service>
+
+</definitions>

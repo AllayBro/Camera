@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
+             xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/"
+             xmlns:modeler="http://camunda.org/schema/modeler/1.0"
+             id="Definitions_drone_fines"
+             name="DRD"
+             namespace="http://camunda.org/schema/1.0/dmn"
+             exporter="Camunda Modeler"
+             exporterVersion="5.39.0"
+             modeler:executionPlatform="Camunda Cloud"
+             modeler:executionPlatformVersion="8.7.0">
+
+  <!-- Решение 1: Оператор дрона -->
+  <decision id="Decision_Operator" name="Оператор дрона">
+    <decisionTable id="DT_Operator" hitPolicy="FIRST">
+      <input id="Op_In1" label="Снимок сделан">
+        <inputExpression id="Op_Expr1" typeRef="boolean">
+          <text>sнимокСделан</text>
+        </inputExpression>
+      </input>
+      <input id="Op_In2" label="Метаданные собраны">
+        <inputExpression id="Op_Expr2" typeRef="boolean">
+          <text>метаданныеСобраны</text>
+        </inputExpression>
+      </input>
+      <input id="Op_In3" label="Файл сформирован">
+        <inputExpression id="Op_Expr3" typeRef="boolean">
+          <text>файлСформирован</text>
+        </inputExpression>
+      </input>
+      <input id="Op_In4" label="Файл передан">
+        <inputExpression id="Op_Expr4" typeRef="boolean">
+          <text>файлПередан</text>
+        </inputExpression>
+      </input>
+
+      <output id="Op_Out" name="статусПакета" label="Статус пакета" typeRef="string"/>
+
+      <rule id="Op_R1">
+        <inputEntry id="Op_R1E1"><text>true</text></inputEntry>
+        <inputEntry id="Op_R1E2"><text>true</text></inputEntry>
+        <inputEntry id="Op_R1E3"><text>true</text></inputEntry>
+        <inputEntry id="Op_R1E4"><text>true</text></inputEntry>
+        <outputEntry id="Op_R1O1"><text>"пакет передан"</text></outputEntry>
+      </rule>
+      <rule id="Op_R2">
+        <inputEntry id="Op_R2E1"><text>-</text></inputEntry>
+        <inputEntry id="Op_R2E2"><text>-</text></inputEntry>
+        <inputEntry id="Op_R2E3"><text>-</text></inputEntry>
+        <inputEntry id="Op_R2E4"><text>-</text></inputEntry>
+        <outputEntry id="Op_R2O1"><text>"ошибка оператора"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Решение 2: Специалист по обработке снимков -->
+  <decision id="Decision_Specialist" name="Специалист по обработке снимков">
+    <informationRequirement id="IR_Op_to_Sp">
+      <requiredDecision href="#Decision_Operator"/>
+    </informationRequirement>
+
+    <decisionTable id="DT_Specialist" hitPolicy="FIRST">
+      <input id="Sp_In0" label="Статус пакета">
+        <inputExpression id="Sp_Expr0" typeRef="string">
+          <text>Оператор дрона</text>
+        </inputExpression>
+      </input>
+      <input id="Sp_In1" label="Структура корректна">
+        <inputExpression id="Sp_Expr1" typeRef="boolean">
+          <text>структураКорректна</text>
+        </inputExpression>
+      </input>
+      <input id="Sp_In2" label="Подлинность подтверждена">
+        <inputExpression id="Sp_Expr2" typeRef="boolean">
+          <text>подписьКорректна</text>
+        </inputExpression>
+      </input>
+      <input id="Sp_In3" label="Каталог подтвердил ссылки">
+        <inputExpression id="Sp_Expr3" typeRef="boolean">
+          <text>каталогПодтвердил</text>
+        </inputExpression>
+      </input>
+      <input id="Sp_In4" label="Есть снимки для обработки">
+        <inputExpression id="Sp_Expr4" typeRef="boolean">
+          <text>естьСнимки</text>
+        </inputExpression>
+      </input>
+
+      <output id="Sp_Out" name="результатОбработки" label="Результат обработки" typeRef="string"/>
+
+      <rule id="Sp_R1">
+        <inputEntry id="Sp_R1E0"><text>"пакет передан"</text></inputEntry>
+        <inputEntry id="Sp_R1E1"><text>true</text></inputEntry>
+        <inputEntry id="Sp_R1E2"><text>true</text></inputEntry>
+        <inputEntry id="Sp_R1E3"><text>true</text></inputEntry>
+        <inputEntry id="Sp_R1E4"><text>true</text></inputEntry>
+        <outputEntry id="Sp_R1O1"><text>"обработано"</text></outputEntry>
+      </rule>
+      <rule id="Sp_R2">
+        <inputEntry id="Sp_R2E0"><text>-</text></inputEntry>
+        <inputEntry id="Sp_R2E1"><text>-</text></inputEntry>
+        <inputEntry id="Sp_R2E2"><text>-</text></inputEntry>
+        <inputEntry id="Sp_R2E3"><text>-</text></inputEntry>
+        <inputEntry id="Sp_R2E4"><text>-</text></inputEntry>
+        <outputEntry id="Sp_R2O1"><text>"ошибка обработки"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Решение 3: Инспектор контрольного органа -->
+  <decision id="Decision_Inspector" name="Инспектор контрольного органа">
+    <informationRequirement id="IR_Sp_to_Insp">
+      <requiredDecision href="#Decision_Specialist"/>
+    </informationRequirement>
+
+    <decisionTable id="DT_Inspector" hitPolicy="FIRST">
+      <input id="Insp_In0" label="Результат обработки">
+        <inputExpression id="Insp_Expr0" typeRef="string">
+          <text>Специалист по обработке снимков</text>
+        </inputExpression>
+      </input>
+      <input id="Insp_In1" label="Нарушение обнаружено">
+        <inputExpression id="Insp_Expr1" typeRef="boolean">
+          <text>нарушениеОбнаружено</text>
+        </inputExpression>
+      </input>
+      <input id="Insp_In2" label="Случай спорный">
+        <inputExpression id="Insp_Expr2" typeRef="boolean">
+          <text>случайСпорный</text>
+        </inputExpression>
+      </input>
+
+      <output id="Insp_Out" name="результатПроверки" label="Результат проверки" typeRef="string"/>
+
+      <rule id="Insp_R1">
+        <inputEntry id="Insp_R1E0"><text>"обработано"</text></inputEntry>
+        <inputEntry id="Insp_R1E1"><text>true</text></inputEntry>
+        <inputEntry id="Insp_R1E2"><text>false</text></inputEntry>
+        <outputEntry id="Insp_R1O1"><text>"постановление о штрафе"</text></outputEntry>
+      </rule>
+      <rule id="Insp_R2">
+        <inputEntry id="Insp_R2E0"><text>"обработано"</text></inputEntry>
+        <inputEntry id="Insp_R2E1"><text>true</text></inputEntry>
+        <inputEntry id="Insp_R2E2"><text>true</text></inputEntry>
+        <outputEntry id="Insp_R2O1"><text>"требуется ручная проверка"</text></outputEntry>
+      </rule>
+      <rule id="Insp_R3">
+        <inputEntry id="Insp_R3E0"><text>"обработано"</text></inputEntry>
+        <inputEntry id="Insp_R3E1"><text>false</text></inputEntry>
+        <inputEntry id="Insp_R3E2"><text>-</text></inputEntry>
+        <outputEntry id="Insp_R3O1"><text>"нет нарушения"</text></outputEntry>
+      </rule>
+      <rule id="Insp_R4">
+        <inputEntry id="Insp_R4E0"><text>-</text></inputEntry>
+        <inputEntry id="Insp_R4E1"><text>-</text></inputEntry>
+        <inputEntry id="Insp_R4E2"><text>-</text></inputEntry>
+        <outputEntry id="Insp_R4O1"><text>"нет решения"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Визуальная схема DRD -->
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+
+      <dmndi:DMNShape dmnElementRef="Decision_Operator">
+        <dc:Bounds x="160" y="100" width="220" height="80"/>
+      </dmndi:DMNShape>
+
+      <dmndi:DMNShape dmnElementRef="Decision_Specialist" id="DMNShape_Sp">
+        <dc:Bounds x="420" y="100" width="280" height="80"/>
+      </dmndi:DMNShape>
+
+      <dmndi:DMNShape dmnElementRef="Decision_Inspector" id="DMNShape_Insp">
+        <dc:Bounds x="760" y="100" width="280" height="80"/>
+      </dmndi:DMNShape>
+
+      <dmndi:DMNEdge dmnElementRef="IR_Op_to_Sp">
+        <di:waypoint x="380" y="140"/>
+        <di:waypoint x="420" y="140"/>
+      </dmndi:DMNEdge>
+
+      <dmndi:DMNEdge dmnElementRef="IR_Sp_to_Insp">
+        <di:waypoint x="700" y="140"/>
+        <di:waypoint x="760" y="140"/>
+      </dmndi:DMNEdge>
+
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

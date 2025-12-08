@@ -1,0 +1,16 @@
+meta {
+  name: штраф_REST
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:8090/camera2/webresources/fines
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

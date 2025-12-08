@@ -1,0 +1,20 @@
+meta {
+  name: BREL_ODE
+  type: http
+  seq: 9
+}
+
+get {
+  url: http://localhost:8080/ode/processes/DroneFineProcess?wsdl
+  body: none
+  auth: inherit
+}
+
+params:query {
+  wsdl: 
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

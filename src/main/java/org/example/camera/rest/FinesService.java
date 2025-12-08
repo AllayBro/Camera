@@ -85,7 +85,13 @@ public class FinesService {
             for (JsonElement el : finesArray) {
                 JsonObject fine = el.getAsJsonObject();
 
-                String id = fine.get("id").getAsString();
+                // Используем targetId если есть, иначе id
+                String id = fine.has("targetId") ? fine.get("targetId").getAsString() : 
+                           fine.has("id") ? fine.get("id").getAsString() : null;
+                if (id == null) {
+                    throw new IllegalArgumentException("Missing required field: 'id' or 'targetId'");
+                }
+                
                 String name = fine.get("name").getAsString();
                 String type = fine.get("type").getAsString();
                 double latitude = fine.get("latitude").getAsDouble();

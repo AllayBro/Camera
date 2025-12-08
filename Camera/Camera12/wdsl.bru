@@ -1,0 +1,21 @@
+meta {
+  name: wdsl
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:8080/camera2-1.0.0/DroneService?wsdl
+
+  body: none
+  auth: inherit
+}
+
+params:query {
+  wsdl
+  : 
+}
+
+settings {
+  encodeUrl: true
+}

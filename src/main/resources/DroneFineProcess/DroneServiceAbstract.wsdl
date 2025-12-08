@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="http://www.example.com/drone/service"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:drone="http://www.example.com/drone"
+             targetNamespace="http://www.example.com/drone/service"
+             name="DroneServiceAbstract">
+
+    <!-- Импорт XML-схемы -->
+    <types>
+        <xsd:schema targetNamespace="http://www.example.com/drone/service"
+                    xmlns:drone="http://www.example.com/drone">
+            <xsd:import namespace="http://www.example.com/drone"
+                        schemaLocation="drone_target.xsd"/>
+
+
+            <!-- Элементы для операций -->
+            <xsd:element name="GetDroneInfoRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="droneId" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="GetDroneInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="droneInfo" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="RegisterFineRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="droneId" type="xsd:string"/>
+                        <xsd:element name="violation" type="xsd:string"/>
+                        <xsd:element name="penalty" type="xsd:double"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="RegisterFineResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="GetFinesRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="droneId" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="GetFinesResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="fines" type="xsd:string" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <!-- Fault элементы -->
+            <xsd:element name="InvalidDroneIdFault">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="message" type="xsd:string"/>
+                        <xsd:element name="droneId" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="ServiceUnavailableFault">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="message" type="xsd:string"/>
+                        <xsd:element name="errorCode" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="ValidationFault">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="message" type="xsd:string"/>
+                        <xsd:element name="field" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <!-- Сообщения -->
+    <message name="GetDroneInfoRequestMessage">
+        <part name="parameters" element="tns:GetDroneInfoRequest"/>
+    </message>
+    
+    <message name="GetDroneInfoResponseMessage">
+        <part name="parameters" element="tns:GetDroneInfoResponse"/>
+    </message>
+    
+    <message name="RegisterFineRequestMessage">
+        <part name="parameters" element="tns:RegisterFineRequest"/>
+    </message>
+    
+    <message name="RegisterFineResponseMessage">
+        <part name="parameters" element="tns:RegisterFineResponse"/>
+    </message>
+    
+    <message name="GetFinesRequestMessage">
+        <part name="parameters" element="tns:GetFinesRequest"/>
+    </message>
+    
+    <message name="GetFinesResponseMessage">
+        <part name="parameters" element="tns:GetFinesResponse"/>
+    </message>
+    
+    <!-- Fault сообщения -->
+    <message name="InvalidDroneIdFaultMessage">
+        <part name="fault" element="tns:InvalidDroneIdFault"/>
+    </message>
+    
+    <message name="ServiceUnavailableFaultMessage">
+        <part name="fault" element="tns:ServiceUnavailableFault"/>
+    </message>
+    
+    <message name="ValidationFaultMessage">
+        <part name="fault" element="tns:ValidationFault"/>
+    </message>
+
+    <!-- Тип порта -->
+    <portType name="DroneServicePortType">
+        <operation name="GetDroneInfo">
+            <input message="tns:GetDroneInfoRequestMessage"/>
+            <output message="tns:GetDroneInfoResponseMessage"/>
+            <fault name="InvalidDroneIdFault" message="tns:InvalidDroneIdFaultMessage"/>
+            <fault name="ServiceUnavailableFault" message="tns:ServiceUnavailableFaultMessage"/>
+        </operation>
+        
+        <operation name="RegisterFine">
+            <input message="tns:RegisterFineRequestMessage"/>
+            <output message="tns:RegisterFineResponseMessage"/>
+            <fault name="ValidationFault" message="tns:ValidationFaultMessage"/>
+            <fault name="ServiceUnavailableFault" message="tns:ServiceUnavailableFaultMessage"/>
+        </operation>
+        
+        <operation name="GetFines">
+            <input message="tns:GetFinesRequestMessage"/>
+            <output message="tns:GetFinesResponseMessage"/>
+            <fault name="InvalidDroneIdFault" message="tns:InvalidDroneIdFaultMessage"/>
+            <fault name="ServiceUnavailableFault" message="tns:ServiceUnavailableFaultMessage"/>
+        </operation>
+    </portType>
+
+    <!-- Partner Link Type для BPEL -->
+    <plnk:partnerLinkType name="DroneServiceLT" xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+        <plnk:role name="DroneServiceRole">
+            <plnk:portType name="tns:DroneServicePortType"/>
+        </plnk:role>
+    </plnk:partnerLinkType>
+
+</definitions>
+

@@ -6,6 +6,7 @@
 
     <display-name>camera2</display-name>
 
+    <!-- JAX-RS (Jersey) -->
     <servlet>
         <servlet-name>JerseyWebApp</servlet-name>
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
@@ -20,4 +21,21 @@
         <servlet-name>JerseyWebApp</servlet-name>
         <url-pattern>/webresources/*</url-pattern>
     </servlet-mapping>
+
+    <!-- JAX-WS (Metro) -->
+    <listener>
+        <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>JAXWSServlet</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>JAXWSServlet</servlet-name>
+        <url-pattern>/DroneService</url-pattern>
+    </servlet-mapping>
+
 </web-app>

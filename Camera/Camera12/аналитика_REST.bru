@@ -1,0 +1,16 @@
+meta {
+  name: аналитика_REST
+  type: http
+  seq: 3
+}
+
+get {
+  url: http://localhost:8090/camera2/webresources/analytics
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

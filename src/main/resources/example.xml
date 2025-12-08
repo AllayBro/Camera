@@ -3,17 +3,17 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://www.example.com/drone drone_target.xsd">
 
-    <Drone id="d1" model="DJI Mavic" status="active">
+    <Drone id="d1">
         <Model>DJI Mavic</Model>
         <Status>active</Status>
     </Drone>
 
-    <Drone id="d2" model="DJI Phantom" status="inactive">
+    <Drone id="d2">
         <Model>DJI Phantom</Model>
         <Status>inactive</Status>
     </Drone>
 
-    <Target id="t1" name="Car" type="car">
+    <Target id="t1">
         <Name>Car</Name>
         <Type>car</Type>
         <Coordinates precision="high">
@@ -23,7 +23,7 @@
         </Coordinates>
     </Target>
 
-    <Target id="t2" name="Building" type="building">
+    <Target id="t2">
         <Name>Building</Name>
         <Type>building</Type>
         <Coordinates precision="medium">
@@ -38,6 +38,11 @@
         <TargetID>t1</TargetID>
         <DateTime>2025-02-01T12:00:00Z</DateTime>
         <FilePath>/photos/photo1.jpg</FilePath>
+        <Coordinates precision="high">
+            <Latitude>55.7558</Latitude>
+            <Longitude>37.6176</Longitude>
+            <Altitude>120.5</Altitude>
+        </Coordinates>
         <PhotoMetadata>
             <Resolution>1920x1080</Resolution>
             <FileSize>2.5MB</FileSize>
@@ -50,6 +55,11 @@
         <TargetID>t2</TargetID>
         <DateTime>2025-02-02T14:30:00Z</DateTime>
         <FilePath>/photos/photo2.jpg</FilePath>
+        <Coordinates precision="medium">
+            <Latitude>55.7600</Latitude>
+            <Longitude>37.6200</Longitude>
+            <Altitude>150.0</Altitude>
+        </Coordinates>
         <PhotoMetadata>
             <Resolution>1280x720</Resolution>
             <FileSize>1.8MB</FileSize>

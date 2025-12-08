@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformmap xmlns="http://www.sun.com/jbi/descriptor/transformmap"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://www.sun.com/jbi/descriptor/transformmap http://www.sun.com/jbi/descriptor/transformmap.xsd">
+
+    <service name="PhotoTransformService"
+             targetNamespace="http://www.example.com/xslt"
+             port="PhotoTransformPort"
+             operation="transformPhotos">
+
+        <transform-request>
+            <xsl-file>transform_request.xsl</xsl-file>
+        </transform-request>
+
+        <transform-response>
+            <xsl-file>transform_response.xsl</xsl-file>
+        </transform-response>
+
+    </service>
+
+</transformmap>
+

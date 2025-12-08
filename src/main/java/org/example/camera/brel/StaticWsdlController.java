@@ -15,7 +15,31 @@ public class StaticWsdlController {
     @GetMapping(value = "/services/DroneFineProcess", produces = MediaType.TEXT_XML_VALUE)
     public ResponseEntity<byte[]> getDroneFineWsdl(@RequestParam(required = false) String wsdl) throws IOException {
         // если нужен только ?wsdl — можно проверять параметр, но не обязательно
-        ClassPathResource r = new ClassPathResource("wsdl/DroneFineProcess.wsdl");
+        ClassPathResource r = new ClassPathResource("DroneFineProcess/DroneFineProcess.wsdl");
+        if (!r.exists()) {
+            return ResponseEntity.notFound().build();
+        }
+        byte[] content = r.getInputStream().readAllBytes();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, "text/xml; charset=UTF-8")
+                .body(content);
+    }
+
+    @GetMapping(value = "/ws/droneService.wsdl", produces = MediaType.TEXT_XML_VALUE)
+    public ResponseEntity<byte[]> getDroneServiceWsdl() throws IOException {
+        ClassPathResource r = new ClassPathResource("wsdl/DroneServiceConcrete.wsdl");
+        if (!r.exists()) {
+            return ResponseEntity.notFound().build();
+        }
+        byte[] content = r.getInputStream().readAllBytes();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, "text/xml; charset=UTF-8")
+                .body(content);
+    }
+
+    @GetMapping(value = "/ws/droneServiceAbstract.wsdl", produces = MediaType.TEXT_XML_VALUE)
+    public ResponseEntity<byte[]> getDroneServiceAbstractWsdl() throws IOException {
+        ClassPathResource r = new ClassPathResource("wsdl/DroneServiceAbstract.wsdl");
         if (!r.exists()) {
             return ResponseEntity.notFound().build();
         }
