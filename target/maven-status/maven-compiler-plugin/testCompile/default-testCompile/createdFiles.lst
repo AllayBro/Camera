@@ -1,0 +1,5 @@
+org\example\camera\soap\FinesServiceSoapTest.class
+org\example\camera\soap\JournalServiceSoapTest.class
+org\example\camera\rest\FinesServiceRestTest.class
+org\example\camera\rest\JournalServiceRestTest.class
+org\example\camera\soap\DroneServiceSoapTest.class

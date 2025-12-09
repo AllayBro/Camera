@@ -1,0 +1,14 @@
+-------------------------------------------------------------------------------
+Test set: org.example.camera.soap.JournalServiceSoapTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.049 s <<< FAILURE! -- in org.example.camera.soap.JournalServiceSoapTest
+org.example.camera.soap.JournalServiceSoapTest.getJournal_works -- Time elapsed: 0.027 s <<< ERROR!
+java.io.FileNotFoundException: http://localhost:8090/camera2/JournalService
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:2033)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1626)
+	at org.example.camera.soap.JournalServiceSoapTest.sendSoap(JournalServiceSoapTest.java:49)
+	at org.example.camera.soap.JournalServiceSoapTest.getJournal_works(JournalServiceSoapTest.java:30)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
