@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://www.example.com/journal/service"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        targetNamespace="http://www.example.com/journal/service"
+        name="JournalService">
+
+    <types>
+        <xs:schema targetNamespace="http://www.example.com/journal/service" elementFormDefault="qualified">
+
+            <xs:element name="GetDroneJournalRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="droneId" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:complexType name="JournalRecord">
+                <xs:sequence>
+                    <xs:element name="droneId" type="xs:string"/>
+                    <xs:element name="targetId" type="xs:string"/>
+                    <xs:element name="dateTime" type="xs:string"/>
+                    <xs:element name="latitude" type="xs:double"/>
+                    <xs:element name="longitude" type="xs:double"/>
+                    <xs:element name="altitude" type="xs:double"/>
+                    <xs:element name="filePath" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:element name="GetDroneJournalResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="record" type="tns:JournalRecord" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+        </xs:schema>
+    </types>
+
+    <message name="GetDroneJournalRequestMessage">
+        <part name="parameters" element="tns:GetDroneJournalRequest"/>
+    </message>
+
+    <message name="GetDroneJournalResponseMessage">
+        <part name="parameters" element="tns:GetDroneJournalResponse"/>
+    </message>
+
+    <portType name="JournalServicePortType">
+        <operation name="GetDroneJournal">
+            <input message="tns:GetDroneJournalRequestMessage"/>
+            <output message="tns:GetDroneJournalResponseMessage"/>
+        </operation>
+    </portType>
+
+    <binding name="JournalServiceBinding" type="tns:JournalServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="GetDroneJournal">
+            <soap:operation soapAction="http://www.example.com/journal/service/GetDroneJournal"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+    </binding>
+
+    <service name="JournalService">
+        <port name="JournalServicePort" binding="tns:JournalServiceBinding">
+            <soap:address location="http://localhost:8090/camera2/JournalService"/>
+        </port>
+    </service>
+
+</definitions>

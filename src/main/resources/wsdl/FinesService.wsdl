@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://www.example.com/fines/service"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        targetNamespace="http://www.example.com/fines/service"
+        name="FinesService">
+
+    <types>
+        <xs:schema targetNamespace="http://www.example.com/fines/service" elementFormDefault="qualified">
+
+            <xs:element name="RegisterFineRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="droneId" type="xs:string"/>
+                        <xs:element name="violation" type="xs:string"/>
+                        <xs:element name="penalty" type="xs:double"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="RegisterFineResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="result" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="GetFinesRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="droneId" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="GetFinesResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="fine" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+        </xs:schema>
+    </types>
+
+    <message name="RegisterFineRequestMessage">
+        <part name="parameters" element="tns:RegisterFineRequest"/>
+    </message>
+
+    <message name="RegisterFineResponseMessage">
+        <part name="parameters" element="tns:RegisterFineResponse"/>
+    </message>
+
+    <message name="GetFinesRequestMessage">
+        <part name="parameters" element="tns:GetFinesRequest"/>
+    </message>
+
+    <message name="GetFinesResponseMessage">
+        <part name="parameters" element="tns:GetFinesResponse"/>
+    </message>
+
+    <portType name="FinesServicePortType">
+        <operation name="RegisterFine">
+            <input message="tns:RegisterFineRequestMessage"/>
+            <output message="tns:RegisterFineResponseMessage"/>
+        </operation>
+        <operation name="GetFines">
+            <input message="tns:GetFinesRequestMessage"/>
+            <output message="tns:GetFinesResponseMessage"/>
+        </operation>
+    </portType>
+
+    <binding name="FinesServiceBinding" type="tns:FinesServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+
+        <operation name="RegisterFine">
+            <soap:operation soapAction="http://www.example.com/fines/service/RegisterFine"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+
+        <operation name="GetFines">
+            <soap:operation soapAction="http://www.example.com/fines/service/GetFines"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+    </binding>
+
+    <service name="FinesService">
+        <port name="FinesServicePort" binding="tns:FinesServiceBinding">
+            <soap:address location="http://localhost:8090/camera2/FinesService"/>
+        </port>
+    </service>
+
+</definitions>

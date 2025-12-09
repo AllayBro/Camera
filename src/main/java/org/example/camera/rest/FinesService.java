@@ -1,5 +1,6 @@
 package org.example.camera.rest;
 
+import org.example.camera.core.FinesCoreService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
 import com.google.gson.*;
@@ -9,16 +10,8 @@ import java.util.*;
 @RequestMapping("/webresources/fines")
 public class FinesService {
 
-    private static final Map<String, Integer> PENALTY_TABLE = Map.of(
-            "Превышение скорости", 10000,
-            "Пересечение двойной сплошной", 15000,
-            "Проезд по обочине", 7000,
-            "Проезд на красный сигнал", 12000,
-            "Остановка в неположенном месте", 5000
-    );
-
-    // Общая память для сохранения POST-записей
-    private static final List<Map<String, Object>> SAVED_FINES = new ArrayList<>();
+    // Вместо PENALTY_TABLE и SAVED_FINES теперь ОДНО ядро
+    private static final FinesCoreService CORE = new FinesCoreService();
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public String getFines() {
@@ -49,7 +42,7 @@ public class FinesService {
                                         List.of();
 
                 int totalPenalty = violations.stream()
-                        .mapToInt(v -> PENALTY_TABLE.getOrDefault(v, 0))
+                        .mapToInt(v -> CORE.getPenaltyTable().getOrDefault(v, 0))
                         .sum();
 
                 Map<String, Object> record = new LinkedHashMap<>();
@@ -62,13 +55,15 @@ public class FinesService {
                 record.put("droneId", droneId);
                 record.put("violations", violations);
                 record.put("totalPenalty", totalPenalty);
+
                 fines.add(record);
             }
 
-            // Добавляем записи, созданные через POST
-            fines.addAll(SAVED_FINES);
+            // ДОБАВЛЯЕМ штрафы из ядра (бывший SAVED_FINES)
+            fines.addAll(CORE.getSavedFines());
 
             return new Gson().toJson(Map.of("fines", fines));
+
         } catch (Exception e) {
             return "{\"error\":\"" + e.getMessage() + "\"}";
         }
@@ -85,13 +80,13 @@ public class FinesService {
             for (JsonElement el : finesArray) {
                 JsonObject fine = el.getAsJsonObject();
 
-                // Используем targetId если есть, иначе id
-                String id = fine.has("targetId") ? fine.get("targetId").getAsString() : 
-                           fine.has("id") ? fine.get("id").getAsString() : null;
+                // Используем targetId если есть
+                String id = fine.has("targetId") ? fine.get("targetId").getAsString() :
+                        fine.has("id") ? fine.get("id").getAsString() : null;
                 if (id == null) {
                     throw new IllegalArgumentException("Missing required field: 'id' or 'targetId'");
                 }
-                
+
                 String name = fine.get("name").getAsString();
                 String type = fine.get("type").getAsString();
                 double latitude = fine.get("latitude").getAsDouble();
@@ -106,10 +101,12 @@ public class FinesService {
                 }
 
                 int totalPenalty = violations.stream()
-                        .mapToInt(v -> PENALTY_TABLE.getOrDefault(v, 0))
+                        .mapToInt(v -> CORE.getPenaltyTable().getOrDefault(v, 0))
                         .sum();
 
-                // Формат точно как у GET
+                // сохраняем в ядро (бывший SAVED_FINES)
+                CORE.registerFine(droneId, String.join(", ", violations), totalPenalty);
+
                 Map<String, Object> record = new LinkedHashMap<>();
                 record.put("id", id);
                 record.put("name", name);
@@ -121,11 +118,11 @@ public class FinesService {
                 record.put("violations", violations);
                 record.put("totalPenalty", totalPenalty);
 
-                SAVED_FINES.add(record);
                 added.add(record);
             }
 
             return new Gson().toJson(Map.of("fines", added));
+
         } catch (Exception e) {
             return "{\"error\":\"" + e.getMessage() + "\"}";
         }

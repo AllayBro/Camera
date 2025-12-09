@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime" version="2.0">
-    <endpoint
-        name="DroneServicePort"
-        implementation="org.example.camera.soap.DroneServiceBean"
-        url-pattern="/DroneService"/>
-</endpoints>
 
+    <endpoint
+            name="DroneServicePort"
+            implementation="org.example.camera.soap.DroneServiceBean"
+            url-pattern="/DroneService"/>
+
+    <endpoint
+            name="FinesServicePort"
+            implementation="org.example.camera.soap.FinesServiceBean"
+            url-pattern="/FinesService"/>
+
+    <endpoint
+            name="JournalServicePort"
+            implementation="org.example.camera.soap.JournalServiceBean"
+            url-pattern="/JournalService"/>
+
+</endpoints>
