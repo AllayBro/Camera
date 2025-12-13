@@ -48,6 +48,7 @@ org\example\camera\DronePhotoJSONAnalyzer$Photo.class
 org\example\camera\DronePhotoJSONAnalyzer$Target.class
 org\example\camera\DronePhotoJSONAnalyzer.class
 org\example\camera\client\DroneServiceDIIClient.class
+org\example\camera\rest\ApplicationConfig.class
 org\example\camera\soap\DroneServiceBean$GetDroneInfoRequest.class
 org\example\camera\soap\DroneServiceBean$GetDroneInfoResponse.class
 org\example\camera\DronePhotoJAXBAnalyzer$Photo.class
@@ -59,6 +60,7 @@ org\example\camera\soap\fines\dto\GetFinesRequest.class
 org\example\camera\CustomErrorHandler.class
 org\example\camera\soap\DroneServiceBean$RegisterFineResponse.class
 org\example\camera\wsdl\Photo.class
+org\example\camera\config\JaxWsConfig$1.class
 org\example\camera\soap\DroneServiceBean$ServiceUnavailableFault.class
 org\example\camera\brel\StaticWsdlController.class
 org\example\camera\core\FinesCoreService.class

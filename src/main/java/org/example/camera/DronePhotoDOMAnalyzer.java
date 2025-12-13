@@ -8,9 +8,7 @@ import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 
 import org.w3c.dom.*;
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
-import org.xml.sax.SAXException;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

@@ -9,7 +9,9 @@
 
 ---
 
-## 🟢 SOAP веб-сервис (JAX-WS) - Лабораторная работа №6
+## 🟢 SOAP веб-сервисы (JAX-WS) - Лабораторная работа №6
+
+### DroneService
 
 | URL | Описание |
 |-----|----------|
@@ -18,10 +20,31 @@
 | `http://localhost:8090/camera2/ws/droneService.wsdl` | Статический WSDL (конкретная привязка) |
 | `http://localhost:8090/camera2/ws/droneServiceAbstract.wsdl` | Статический абстрактный WSDL |
 
-**Операции SOAP сервиса:**
+**Операции DroneService:**
 - `GetDroneInfo` - получение информации о дроне
 - `RegisterFine` - регистрация штрафа
 - `GetFines` - получение списка штрафов
+
+### FinesService
+
+| URL | Описание |
+|-----|----------|
+| `http://localhost:8090/camera2/FinesService` | SOAP endpoint - сервис для работы со штрафами |
+| `http://localhost:8090/camera2/FinesService?wsdl` | WSDL описание - динамический WSDL от сервиса |
+
+**Операции FinesService:**
+- `RegisterFine` - регистрация штрафа
+- `GetFines` - получение списка штрафов для дрона
+
+### JournalService
+
+| URL | Описание |
+|-----|----------|
+| `http://localhost:8090/camera2/JournalService` | SOAP endpoint - сервис журнала дронов |
+| `http://localhost:8090/camera2/JournalService?wsdl` | WSDL описание - динамический WSDL от сервиса |
+
+**Операции JournalService:**
+- `GetDroneJournal` - получение журнала записей для дрона
 
 ---
 
@@ -69,10 +92,18 @@
 
 ## 🧪 Тестирование
 
-### SOAP сервис:
-1. WSDL: `http://localhost:8090/camera2/DroneService?wsdl`
-2. Клиент: Запустить `DroneServiceClient.main()`
-3. SoapUI/Postman: Импортировать WSDL по URL выше
+### SOAP сервисы:
+1. **DroneService:**
+   - WSDL: `http://localhost:8090/camera2/DroneService?wsdl`
+   - Статический WSDL: `http://localhost:8090/camera2/ws/droneService.wsdl`
+   - Клиент: Запустить `DroneServiceClient.main()`
+2. **FinesService:**
+   - WSDL: `http://localhost:8090/camera2/FinesService?wsdl`
+3. **JournalService:**
+   - WSDL: `http://localhost:8090/camera2/JournalService?wsdl`
+4. **Тестирование:**
+   - SoapUI/Postman/Bruno: Импортировать WSDL по URL выше
+   - Все SOAP endpoints поддерживают `?wsdl` для получения WSDL описания
 
 ### REST API:
 1. Swagger: `http://localhost:8090/camera2/swagger-ui/index.html`
@@ -83,10 +114,17 @@
 
 ## 🔗 Примеры полных URL для копирования
 
-```
-# SOAP
+``` 
+# SOAP - DroneService
 http://localhost:8090/camera2/DroneService?wsdl
 http://localhost:8090/camera2/ws/droneService.wsdl
+http://localhost:8090/camera2/ws/droneServiceAbstract.wsdl
+
+# SOAP - FinesService
+http://localhost:8090/camera2/FinesService?wsdl
+
+# SOAP - JournalService
+http://localhost:8090/camera2/JournalService?wsdl
 
 # REST
 http://localhost:8090/camera2/webresources/drone
@@ -95,9 +133,11 @@ http://localhost:8090/camera2/webresources/fines
 
 # Документация
 http://localhost:8090/camera2/swagger-ui/index.html
+http://localhost:8090/camera2/v3/api-docs
 
 # BPEL WSDL
 http://localhost:8090/camera2/services/DroneFineProcess?wsdl
+http://localhost:8090/camera2/services/DroneFineProcess
 ```
 
 ---

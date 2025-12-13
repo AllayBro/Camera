@@ -29,8 +29,7 @@ import java.util.*;
     name = "DroneServicePortType",
     targetNamespace = "http://www.example.com/drone/service",
     serviceName = "DroneService",
-    portName = "DroneServicePort",
-    wsdlLocation = "wsdl/DroneServiceConcrete.wsdl"
+    portName = "DroneServicePort"
 )
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL, parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @BindingType(value = jakarta.xml.ws.soap.SOAPBinding.SOAP11HTTP_BINDING)

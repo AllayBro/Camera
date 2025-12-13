@@ -1,5 +1,10 @@
 package org.example.camera.rest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.camera.core.FinesCoreService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
@@ -8,12 +13,22 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/webresources/fines")
+@Tag(name = "Fines", description = "API для работы со штрафами")
 public class FinesService {
 
     // Вместо PENALTY_TABLE и SAVED_FINES теперь ОДНО ядро
     private static final FinesCoreService CORE = new FinesCoreService();
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(
+            summary = "Получить список всех штрафов",
+            description = "Возвращает все зарегистрированные штрафы в формате JSON"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Список штрафов",
+            content = @Content(schema = @Schema(implementation = String.class))
+    )
     public String getFines() {
         try {
             DataProvider xml = new DataProvider();
@@ -71,7 +86,16 @@ public class FinesService {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public String calculateFine(@RequestBody String body) {
+    @Operation(
+            summary = "Добавить штраф",
+            description = "Принимает JSON с данными о штрафе и добавляет его в систему"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Добавленные штрафы",
+            content = @Content(schema = @Schema(implementation = String.class))
+    )
+    public String calculateFine(@org.springframework.web.bind.annotation.RequestBody String body) {
         try {
             JsonObject request = JsonParser.parseString(body).getAsJsonObject();
             JsonArray finesArray = request.getAsJsonArray("fines");

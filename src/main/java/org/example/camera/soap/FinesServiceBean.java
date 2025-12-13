@@ -15,8 +15,7 @@ import java.util.List;
         name = "FinesServicePortType",
         targetNamespace = "http://www.example.com/fines/service",
         serviceName = "FinesService",
-        portName = "FinesServicePort",
-        wsdlLocation = "wsdl/FinesService.wsdl"
+        portName = "FinesServicePort"
 )
 @BindingType(SOAPBinding.SOAP11HTTP_BINDING)
 public class FinesServiceBean {

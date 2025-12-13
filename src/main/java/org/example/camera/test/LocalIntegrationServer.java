@@ -82,7 +82,7 @@ public class LocalIntegrationServer {
             }
         });
 
-        server.createContext("/wsdl/DroneServiceConcrete.wsdl", exchange -> {
+        server.createContext("/WEB-INF/wsdl/DroneServiceConcrete.wsdl", exchange -> {
             respondXml(exchange, readResource("src/main/resources/wsdl/DroneServiceConcrete.wsdl"));
         });
 
@@ -102,7 +102,7 @@ public class LocalIntegrationServer {
         System.out.println("  POST http://localhost:" + PORT + CONTEXT_ROOT + "/webresources/fines");
         System.out.println("WSDL endpoints:");
         System.out.println("  http://localhost:" + PORT + CONTEXT_ROOT + "/DroneService?wsdl");
-        System.out.println("  http://localhost:" + PORT + "/wsdl/DroneServiceConcrete.wsdl");
+        System.out.println("  http://localhost:" + PORT + "/WEB-INF/wsdl/DroneServiceConcrete.wsdl");
         System.out.println("  http://localhost:" + PORT + "/wsdl/DroneServiceAbstract.wsdl");
         System.out.println("  http://localhost:" + PORT + "/wsdl/drone_target.xsd");
         System.out.println("Press Ctrl+C to stop.");

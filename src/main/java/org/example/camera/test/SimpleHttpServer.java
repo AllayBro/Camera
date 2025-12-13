@@ -36,8 +36,8 @@ public class SimpleHttpServer {
 
             String path = request.split(" ")[1];
             String resource;
-            if (path.equals("/wsdl/DroneServiceConcrete.wsdl"))
-                resource = "wsdl/DroneServiceConcrete.wsdl";
+            if (path.equals("/WEB-INF/wsdl/DroneServiceConcrete.wsdl"))
+                resource = "WEB-INF/wsdl/DroneServiceConcrete.wsdl";
             else if (path.equals("/wsdl/DroneServiceAbstract.wsdl"))
                 resource = "wsdl/DroneServiceAbstract.wsdl";
             else if (path.equals("/wsdl/drone_target.xsd"))

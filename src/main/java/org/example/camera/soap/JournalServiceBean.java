@@ -15,8 +15,7 @@ import java.util.List;
         name = "JournalServicePortType",
         targetNamespace = "http://www.example.com/journal/service",
         serviceName = "JournalService",
-        portName = "JournalServicePort",
-        wsdlLocation = "wsdl/JournalService.wsdl"
+        portName = "JournalServicePort"
 )
 @BindingType(SOAPBinding.SOAP11HTTP_BINDING)
 public class JournalServiceBean {

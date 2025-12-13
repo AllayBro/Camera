@@ -2,78 +2,71 @@ package org.example.camera.core;
 
 import java.util.*;
 
-/**
- * Ядро работы со штрафами, без привязки к HTTP / REST / SOAP.
- */
 public class FinesCoreService {
 
-    // Таблица базовых штрафов (та самая, что была в REST FinesService)
     private final Map<String, Integer> penaltyTable;
-
-    // Простое in-memory хранилище сохранённых штрафов
-    // (сюда можно писать и из REST, и из SOAP)
     private final List<Map<String, Object>> savedFines = new ArrayList<>();
 
     public FinesCoreService() {
-        Map<String, Integer> tmp = new LinkedHashMap<>();
-        tmp.put("Превышение скорости", 10000);
-        tmp.put("Пересечение двойной сплошной", 15000);
-        tmp.put("Проезд по обочине", 7000);
-        tmp.put("Проезд на красный сигнал", 12000);
-        tmp.put("Остановка в неположенном месте", 5000);
-        this.penaltyTable = Collections.unmodifiableMap(tmp);
+        Map<String, Integer> m = new LinkedHashMap<>();
+        m.put("Превышение скорости", 10000);
+        m.put("Пересечение двойной сплошной", 15000);
+        m.put("Проезд по обочине", 7000);
+        m.put("Проезд на красный сигнал", 12000);
+        m.put("Остановка в неположенном месте", 5000);
+        this.penaltyTable = Collections.unmodifiableMap(m);
     }
 
-    /**
-     * Таблица базовых штрафов (для расчётов в REST/SOAP).
-     */
     public Map<String, Integer> getPenaltyTable() {
         return penaltyTable;
     }
 
-    /**
-     * Зарегистрировать штраф для конкретного дрона.
-     * Этот метод будем использовать и из REST, и из SOAP.
-     */
+    public List<Map<String, Object>> getSavedFines() {
+        return savedFines;
+    }
+
+    // регистрация "полной" записи для REST
+    public void registerFineRecord(Map<String, Object> record) {
+        savedFines.add(new LinkedHashMap<>(record));
+    }
+
+    // упрощённая регистрация для SOAP
     public void registerFine(String droneId, String violation, double penalty) {
-        if (droneId == null || droneId.isBlank()) {
-            throw new IllegalArgumentException("droneId is empty");
-        }
-        if (violation == null || violation.isBlank()) {
-            throw new IllegalArgumentException("violation is empty");
-        }
-
         Map<String, Object> record = new LinkedHashMap<>();
+        record.put("id", null);
+        record.put("name", null);
+        record.put("type", null);
+        record.put("latitude", null);
+        record.put("longitude", null);
+        record.put("altitude", null);
         record.put("droneId", droneId);
-        record.put("violation", violation);
-        record.put("penalty", penalty);
-
+        record.put("violations", List.of(violation));
+        record.put("totalPenalty", (int) Math.round(penalty));
         savedFines.add(record);
     }
 
-    /**
-     * Получить список штрафов по дрону в текстовом виде.
-     * Удобно и для REST, и для SOAP.
-     */
+    // строки для SOAP-GetFines
     public List<String> getFines(String droneId) {
         List<String> result = new ArrayList<>();
-        for (Map<String, Object> fine : savedFines) {
-            if (Objects.equals(droneId, fine.get("droneId"))) {
-                String violation = (String) fine.get("violation");
-                Object p = fine.get("penalty");
-                double penalty = (p instanceof Number)
-                        ? ((Number) p).doubleValue()
-                        : 0.0;
-                result.add(violation + " (" + penalty + ")");
-            }
-        }
-        return result;
-    }
 
-    /**
-     * Если нужно где-то отдать "сырые" записи (например, для REST JSON).
-     */
-    public List<Map<String, Object>> getSavedFines() {
-        return Collections.unmodifiableList(savedFines);
+        for (Map<String, Object> record : savedFines) {
+            Object recDroneId = record.get("droneId");
+            if (!Objects.equals(droneId, recDroneId)) continue;
+
+            @SuppressWarnings("unchecked")
+            List<String> violations = (List<String>) record.get("violations");
+            Object penaltyObj = record.get("totalPenalty");
+            int totalPenalty = penaltyObj instanceof Number
+                    ? ((Number) penaltyObj).intValue()
+                    : 0;
+
+            String title = (violations == null || violations.isEmpty())
+                    ? "Штраф"
+                    : String.join(", ", violations);
+
+            result.add(title + " (" + totalPenalty + ")");
+        }
+
+        return result;
     }
 }
