@@ -22,22 +22,6 @@
         <url-pattern>/webresources/*</url-pattern>
     </servlet-mapping>
 
-    <!-- Публикация SOAP через Metro (JAX-WS) -->
-    <listener>
-        <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
-    </listener>
-
-    <servlet>
-        <servlet-name>JAXWSServlet</servlet-name>
-        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>JAXWSServlet</servlet-name>
-        <url-pattern>/DroneService</url-pattern>
-        <url-pattern>/FinesService</url-pattern>
-        <url-pattern>/JournalService</url-pattern>
-    </servlet-mapping>
+    <!-- JAX-WS (Metro) регистрируется программно через JaxWsConfig -->
 
 </web-app>

@@ -27,7 +27,7 @@ public class StaticWsdlController {
 
     @GetMapping(value = "/ws/droneService.wsdl", produces = MediaType.TEXT_XML_VALUE)
     public ResponseEntity<byte[]> getDroneServiceWsdl() throws IOException {
-        ClassPathResource r = new ClassPathResource("wsdl/DroneServiceConcrete.wsdl");
+        ClassPathResource r = new ClassPathResource("WEB-INF/wsdl/DroneServiceConcrete.wsdl");
         if (!r.exists()) {
             return ResponseEntity.notFound().build();
         }

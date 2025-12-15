@@ -1,8 +1,12 @@
 package org.example.camera.config;
 
+import com.sun.xml.ws.transport.http.servlet.WSServlet;
+import com.sun.xml.ws.transport.http.servlet.WSServletContextListener;
 import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletException;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -45,6 +49,17 @@ public class JaxWsConfig {
                 if (configPath != null && new File(configPath).exists()) {
                     servletContext.setAttribute("com.sun.xml.ws.config.file", configPath);
                     servletContext.log("JAX-WS config file set to: " + configPath);
+                    
+                    // Инициализируем WSServletContextListener вручную после установки конфига
+                    try {
+                        WSServletContextListener listener = new WSServletContextListener();
+                        ServletContextEvent event = new ServletContextEvent(servletContext);
+                        listener.contextInitialized(event);
+                        servletContext.log("WSServletContextListener initialized successfully");
+                    } catch (Exception e) {
+                        servletContext.log("ERROR initializing WSServletContextListener: " + e.getMessage());
+                        e.printStackTrace();
+                    }
                 } else {
                     servletContext.log("ERROR: sun-jaxws.xml not found! SOAP services will not work!");
                     servletContext.log("Tried path: " + configPath);
@@ -53,5 +68,20 @@ public class JaxWsConfig {
         };
     }
 
-}
+    @Bean
+    public ServletRegistrationBean<WSServlet> wsServlet() {
+        ServletRegistrationBean<WSServlet> registration =
+                new ServletRegistrationBean<>(
+                        new WSServlet(),
+                        "/DroneService",
+                        "/FinesService",
+                        "/JournalService"
+                );
 
+        registration.setLoadOnStartup(2);
+        registration.setName("JAXWSServlet");
+
+        return registration;
+    }
+
+}
