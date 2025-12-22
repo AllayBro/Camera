@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.camera.core.FinesCoreService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
 import com.google.gson.*;
@@ -16,8 +17,8 @@ import java.util.*;
 @Tag(name = "Fines", description = "API для работы со штрафами")
 public class FinesService {
 
-    // Вместо PENALTY_TABLE и SAVED_FINES теперь ОДНО ядро
-    private static final FinesCoreService CORE = new FinesCoreService();
+    @Autowired
+    private FinesCoreService CORE;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(

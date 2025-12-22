@@ -20,7 +20,7 @@ class FinesServiceRestTest {
 
     @Test
     void getFines_returnsFinesArray() throws Exception {
-        mockMvc.perform(get("/camera2/webresources/fines"))
+        mockMvc.perform(get("/webresources/fines"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.fines").isArray());
     }
@@ -44,7 +44,7 @@ class FinesServiceRestTest {
                 }
                 """;
 
-        mockMvc.perform(post("/camera2/webresources/fines")
+        mockMvc.perform(post("/webresources/fines")
                         .contentType("application/json")
                         .content(body))
                 .andExpect(status().isOk())

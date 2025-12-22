@@ -1,9 +1,9 @@
 package org.example.camera.soap;
 
-import jakarta.jws.*;
 import jakarta.ejb.Stateless;
+import jakarta.jws.*;
+import jakarta.jws.soap.SOAPBinding;
 import jakarta.xml.ws.BindingType;
-import jakarta.xml.ws.soap.SOAPBinding;
 
 import org.example.camera.core.JournalCoreService;
 import org.example.camera.soap.journal.dto.*;
@@ -17,10 +17,11 @@ import java.util.List;
         serviceName = "JournalService",
         portName = "JournalServicePort"
 )
-@BindingType(SOAPBinding.SOAP11HTTP_BINDING)
+@SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL, parameterStyle = SOAPBinding.ParameterStyle.BARE)
+@BindingType(value = jakarta.xml.ws.soap.SOAPBinding.SOAP11HTTP_BINDING)
 public class JournalServiceBean {
 
-    private final JournalCoreService core = new JournalCoreService();
+    private final JournalCoreService core = JournalCoreService.getInstance();
 
     @WebMethod(operationName = "GetDroneJournal")
     @WebResult(name = "GetDroneJournalResponse", targetNamespace = "http://www.example.com/journal/service")

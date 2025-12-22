@@ -1,9 +1,9 @@
 package org.example.camera.soap;
 
-import jakarta.jws.*;
 import jakarta.ejb.Stateless;
+import jakarta.jws.*;
+import jakarta.jws.soap.SOAPBinding;
 import jakarta.xml.ws.BindingType;
-import jakarta.xml.ws.soap.SOAPBinding;
 
 import org.example.camera.core.FinesCoreService;
 import org.example.camera.soap.fines.dto.*;
@@ -17,10 +17,11 @@ import java.util.List;
         serviceName = "FinesService",
         portName = "FinesServicePort"
 )
-@BindingType(SOAPBinding.SOAP11HTTP_BINDING)
+@SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL, parameterStyle = SOAPBinding.ParameterStyle.BARE)
+@BindingType(value = jakarta.xml.ws.soap.SOAPBinding.SOAP11HTTP_BINDING)
 public class FinesServiceBean {
 
-    private final FinesCoreService core = new FinesCoreService();
+    private final FinesCoreService core = FinesCoreService.getInstance();
 
     @WebMethod(operationName = "RegisterFine")
     @WebResult(name = "RegisterFineResponse", targetNamespace = "http://www.example.com/fines/service")

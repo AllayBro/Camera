@@ -2,10 +2,16 @@ package org.example.camera.core;
 
 import org.example.camera.rest.DataProvider;
 import org.example.camera.soap.journal.dto.JournalRecord;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
 public class JournalCoreService {
+
+    private static final JournalCoreService INSTANCE = new JournalCoreService();
+    
+    private JournalCoreService() {}
 
     public List<JournalRecord> getDroneJournal(String droneId) {
 
@@ -58,5 +64,9 @@ public class JournalCoreService {
         if (value instanceof Number num) return num.doubleValue();
         if (value instanceof String s) return Double.parseDouble(s);
         return 0.0;
+    }
+    
+    public static JournalCoreService getInstance() {
+        return INSTANCE;
     }
 }

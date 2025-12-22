@@ -15,6 +15,7 @@ C:\Users\AllayBro\Desktop\УЧЕБА\ПО ДЖАВА\Практика\Camera12\src\main\java\org\exa
 C:\Users\AllayBro\Desktop\УЧЕБА\ПО ДЖАВА\Практика\Camera12\target\generated-sources\jaxws\org\example\camera\wsdl\RegisterFineResponse.java
 C:\Users\AllayBro\Desktop\УЧЕБА\ПО ДЖАВА\Практика\Camera12\target\generated-sources\jaxws\org\example\camera\wsdl\RegisterFineRequest.java
 C:\Users\AllayBro\Desktop\УЧЕБА\ПО ДЖАВА\Практика\Camera12\target\generated-sources\jaxws\org\example\camera\wsdl\Photo.java
+C:\Users\AllayBro\Desktop\УЧЕБА\ПО ДЖАВА\Практика\Camera12\src\main\java\org\example\camera\rest\SoapServicesInfoController.java
 C:\Users\AllayBro\Desktop\УЧЕБА\ПО ДЖАВА\Практика\Camera12\target\generated-sources\jaxws\org\example\camera\wsdl\ServiceUnavailableFaultMessage.java
 C:\Users\AllayBro\Desktop\УЧЕБА\ПО ДЖАВА\Практика\Camera12\src\main\java\org\example\camera\soap\DroneServiceBean.java
 C:\Users\AllayBro\Desktop\УЧЕБА\ПО ДЖАВА\Практика\Camera12\src\main\java\org\example\camera\DronePhotoJSONAnalyzer.java
@@ -42,6 +43,7 @@ C:\Users\AllayBro\Desktop\УЧЕБА\ПО ДЖАВА\Практика\Camera12\src\main\java\org\exa
 C:\Users\AllayBro\Desktop\УЧЕБА\ПО ДЖАВА\Практика\Camera12\src\main\java\org\example\camera\config\JaxWsConfig.java
 C:\Users\AllayBro\Desktop\УЧЕБА\ПО ДЖАВА\Практика\Camera12\src\main\java\org\example\camera\soap\journal\dto\GetDroneJournalRequest.java
 C:\Users\AllayBro\Desktop\УЧЕБА\ПО ДЖАВА\Практика\Camera12\target\generated-sources\jaxws\org\example\camera\wsdl\GetFinesResponse.java
+C:\Users\AllayBro\Desktop\УЧЕБА\ПО ДЖАВА\Практика\Camera12\src\main\java\org\example\camera\rest\JournalService.java
 C:\Users\AllayBro\Desktop\УЧЕБА\ПО ДЖАВА\Практика\Camera12\target\generated-sources\jaxws\org\example\camera\wsdl\DroneServicePortType.java
 C:\Users\AllayBro\Desktop\УЧЕБА\ПО ДЖАВА\Практика\Camera12\src\main\java\org\example\camera\config\OpenApiConfig.java
 C:\Users\AllayBro\Desktop\УЧЕБА\ПО ДЖАВА\Практика\Camera12\target\generated-sources\jaxws\org\example\camera\wsdl\package-info.java

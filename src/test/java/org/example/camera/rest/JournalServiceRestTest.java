@@ -18,7 +18,7 @@ class JournalServiceRestTest {
 
     @Test
     void getJournal_returnsArray() throws Exception {
-        mockMvc.perform(get("/camera2/webresources/journal"))
+        mockMvc.perform(get("/webresources/journal"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.journal").isArray());
     }

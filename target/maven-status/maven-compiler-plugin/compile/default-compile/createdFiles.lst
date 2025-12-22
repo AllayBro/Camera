@@ -38,6 +38,7 @@ org\example\camera\soap\DroneServiceBean$InvalidDroneIdFault.class
 org\example\camera\wsdl\ObjectFactory.class
 org\example\camera\DronePhotoJAXBAnalyzer.class
 org\example\camera\rest\AnalyticsService.class
+org\example\camera\rest\SoapServicesInfoController.class
 org\example\camera\wsdl\DroneTarget.class
 org\example\camera\DronePhotoJAXBAnalyzer$Coordinates.class
 org\example\camera\wsdl\DroneTarget$Drone$Photos.class
@@ -65,6 +66,7 @@ org\example\camera\soap\DroneServiceBean$ServiceUnavailableFault.class
 org\example\camera\brel\StaticWsdlController.class
 org\example\camera\core\FinesCoreService.class
 org\example\camera\wsdl\InvalidDroneIdFault.class
+org\example\camera\config\OpenApiConfig.class
 org\example\camera\DroneHandler$PhotoInfo.class
 org\example\camera\wsdl\Photo$Coordinates.class
 org\example\camera\wsdl\DroneTarget$Target$Photos.class
@@ -72,6 +74,7 @@ org\example\camera\wsdl\GetDroneInfoRequest.class
 org\example\camera\soap\FinesServiceBean.class
 org\example\camera\DronePhotoJSONAnalyzer$PhotoMetadata.class
 org\example\camera\wsdl\DroneService.class
+org\example\camera\rest\JournalService.class
 org\example\camera\DronePhotoJAXBAnalyzer$PhotoMetadata.class
 org\example\camera\soap\JournalServiceBean.class
 org\example\camera\wsdl\GetFinesRequest.class

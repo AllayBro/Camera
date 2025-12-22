@@ -2,7 +2,7 @@ package org.example.camera.soap.fines.dto;
 
 import jakarta.xml.bind.annotation.*;
 
-@XmlRootElement(name = "GetFinesRequest")
+@XmlRootElement(name = "GetFinesRequest", namespace = "http://www.example.com/fines/service")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GetFinesRequest {
 

@@ -3,6 +3,7 @@ package org.example.camera.soap;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -71,6 +72,12 @@ class FinesServiceSoapTest {
                 : conn.getErrorStream();
 
         byte[] bytes = is.readAllBytes();
-        return new String(bytes, StandardCharsets.UTF_8);
+        String response = new String(bytes, StandardCharsets.UTF_8);
+        
+        if (status >= 400) {
+            throw new IOException("HTTP " + status + ": " + response);
+        }
+        
+        return response;
     }
 }

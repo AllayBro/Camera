@@ -46,7 +46,18 @@ class JournalServiceSoapTest {
             os.write(body.getBytes(StandardCharsets.UTF_8));
         }
 
-        InputStream is = c.getInputStream();
-        return new String(is.readAllBytes(), StandardCharsets.UTF_8);
+        int status = c.getResponseCode();
+        InputStream is = status >= 200 && status < 300
+                ? c.getInputStream()
+                : c.getErrorStream();
+
+        byte[] bytes = is.readAllBytes();
+        String response = new String(bytes, StandardCharsets.UTF_8);
+        
+        if (status >= 400) {
+            throw new IOException("HTTP " + status + ": " + response);
+        }
+        
+        return response;
     }
 }

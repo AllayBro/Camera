@@ -1,9 +1,14 @@
 package org.example.camera.core;
 
+import org.springframework.stereotype.Service;
+
 import java.util.*;
 
+@Service
 public class FinesCoreService {
 
+    private static final FinesCoreService INSTANCE = new FinesCoreService();
+    
     private final Map<String, Integer> penaltyTable;
     private final List<Map<String, Object>> savedFines = new ArrayList<>();
 
@@ -68,5 +73,9 @@ public class FinesCoreService {
         }
 
         return result;
+    }
+    
+    public static FinesCoreService getInstance() {
+        return INSTANCE;
     }
 }

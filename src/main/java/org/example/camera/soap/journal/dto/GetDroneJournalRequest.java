@@ -2,7 +2,7 @@ package org.example.camera.soap.journal.dto;
 
 import jakarta.xml.bind.annotation.*;
 
-@XmlRootElement(name = "GetDroneJournalRequest")
+@XmlRootElement(name = "GetDroneJournalRequest", namespace = "http://www.example.com/journal/service")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GetDroneJournalRequest {
 
