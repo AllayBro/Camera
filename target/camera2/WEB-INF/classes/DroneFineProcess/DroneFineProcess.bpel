@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process name="DroneFineProcess"
+         targetNamespace="http://www.example.com/bpel"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:tns="http://www.example.com/bpel"
+         xmlns:dr="http://www.example.com/drone"
+         xmlns:svc="http://www.example.com/drone/service"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Импорт контракта SOAP-сервиса дронов -->
+    <import namespace="http://www.example.com/drone/service"
+            location="DroneServiceConcrete.wsdl"
+            importType="http://schemas.xmlsoap.org/wsdl/"/>
+    
+    <!-- Импорт WSDL процесса -->
+    <import namespace="http://www.example.com/bpel"
+            location="DroneFineProcess.wsdl"
+            importType="http://schemas.xmlsoap.org/wsdl/"/>
+
+    <!-- Определение партнёров -->
+    <partnerLinks>
+        <partnerLink name="client"
+                     partnerLinkType="tns:DroneFineLT"
+                     myRole="provider"/>
+        <partnerLink name="droneService"
+                     partnerLinkType="svc:DroneServiceLT"
+                     partnerRole="DroneServiceRole"/>
+    </partnerLinks>
+
+    <!-- Определение переменных -->
+    <variables>
+        <variable name="request" messageType="tns:DroneFineRequestMessage"/>
+        <variable name="response" messageType="tns:DroneFineResponseMessage"/>
+        <variable name="droneRequest" messageType="svc:GetDroneInfoRequestMessage"/>
+        <variable name="droneResponse" messageType="svc:GetDroneInfoResponseMessage"/>
+        <variable name="serviceFault" messageType="tns:ServiceFaultMessage"/>
+        <variable name="validationFault" messageType="tns:ValidationFaultMessage"/>
+    </variables>
+
+    <!-- Обработчики ошибок -->
+    <faultHandlers>
+        <!-- Обработка ошибок от DroneService -->
+        <catch faultName="svc:InvalidDroneIdFault" faultVariable="droneFault" faultMessageType="svc:InvalidDroneIdFaultMessage">
+            <assign>
+                <copy>
+                    <from>concat("Ошибка сервиса дронов: ", $droneFault.parameters/svc:InvalidDroneIdFault/svc:message)</from>
+                    <to>$serviceFault.fault/tns:ServiceFault/tns:message</to>
+                </copy>
+                <copy>
+                    <from>"INVALID_DRONE_ID"</from>
+                    <to>$serviceFault.fault/tns:ServiceFault/tns:errorCode</to>
+                </copy>
+            </assign>
+            <reply partnerLink="client"
+                   portType="tns:DroneFinePT"
+                   operation="processDroneData"
+                   faultName="ServiceFault"
+                   variable="serviceFault"/>
+        </catch>
+        
+        <!-- Обработка всех остальных ошибок -->
+        <catchAll>
+            <assign>
+                <copy>
+                    <from>"Произошла внутренняя ошибка при обработке запроса"</from>
+                    <to>$serviceFault.fault/tns:ServiceFault/tns:message</to>
+                </copy>
+                <copy>
+                    <from>"INTERNAL_ERROR"</from>
+                    <to>$serviceFault.fault/tns:ServiceFault/tns:errorCode</to>
+                </copy>
+            </assign>
+            <reply partnerLink="client"
+                   portType="tns:DroneFinePT"
+                   operation="processDroneData"
+                   faultName="ServiceFault"
+                   variable="serviceFault"/>
+        </catchAll>
+    </faultHandlers>
+
+    <!-- Основная логика -->
+    <sequence>
+        <!-- Приём входного запроса -->
+        <receive partnerLink="client"
+                 portType="tns:DroneFinePT"
+                 operation="processDroneData"
+                 variable="request"
+                 createInstance="yes"/>
+
+        <!-- Проверка валидности входных данных (структурное действие if) -->
+        <if>
+            <condition>
+                string-length(normalize-space($request.parameters/tns:DroneFineRequest/tns:droneId)) = 0
+            </condition>
+            <then>
+                <!-- Возврат ошибки валидации -->
+                <assign>
+                    <copy>
+                        <from>"Идентификатор дрона не может быть пустым"</from>
+                        <to>$validationFault.fault/tns:ValidationFault/tns:message</to>
+                    </copy>
+                    <copy>
+                        <from>"droneId"</from>
+                        <to>$validationFault.fault/tns:ValidationFault/tns:field</to>
+                    </copy>
+                </assign>
+                <reply partnerLink="client"
+                       portType="tns:DroneFinePT"
+                       operation="processDroneData"
+                       faultName="ValidationFault"
+                       variable="validationFault"/>
+            </then>
+            <else>
+                <!-- Подготовка запроса к DroneService с использованием XPath-функций -->
+                <assign>
+                    <copy>
+                        <!-- Использование XPath-функции normalize-space для очистки пробелов -->
+                        <from>normalize-space($request.parameters/tns:DroneFineRequest/tns:droneId)</from>
+                        <to>$droneRequest.parameters/svc:GetDroneInfoRequest/svc:droneId</to>
+                    </copy>
+                </assign>
+
+                <!-- Вызов веб-сервиса DroneServicePort -->
+                <invoke partnerLink="droneService"
+                        portType="svc:DroneServicePortType"
+                        operation="GetDroneInfo"
+                        inputVariable="droneRequest"
+                        outputVariable="droneResponse"/>
+
+                <!-- Формирование ответа с использованием XPath-функции concat -->
+                <assign>
+                    <copy>
+                        <!-- Использование XPath-функции concat для формирования сообщения -->
+                        <from>concat("Результат запроса: ", $droneResponse.parameters/svc:GetDroneInfoResponse/svc:droneInfo)</from>
+                        <to>$response.parameters/tns:DroneFineResponse/tns:droneInfo</to>
+                    </copy>
+                </assign>
+
+                <!-- Возврат клиенту -->
+                <reply partnerLink="client"
+                       portType="tns:DroneFinePT"
+                       operation="processDroneData"
+                       variable="response"/>
+            </else>
+        </if>
+    </sequence>
+</process>

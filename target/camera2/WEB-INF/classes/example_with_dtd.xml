@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DroneTarget xmlns="http://www.example.com/drone"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.example.com/drone drone_target.xsd">
+    <!-- Пример дрона -->
+    <Drone id="d1">
+        <Model>DJI Mavic</Model>
+        <Status>active</Status>
+    </Drone>
+    <!-- Пример цели -->
+    <Target id="t1">
+        <Name>Car</Name>
+        <Type>car</Type>
+        <Coordinates precision="high">
+            <Latitude>55.7558</Latitude>
+            <Longitude>37.6176</Longitude>
+            <Altitude>120.5</Altitude>
+        </Coordinates>
+    </Target>
+
+    <!-- Пример фотографии -->
+    <Photo id="p1">
+        <DroneID>d1</DroneID>
+        <TargetID>t1</TargetID>
+        <DateTime>2023-10-01T12:00:00Z</DateTime>
+        <FilePath>/photos/photo1.jpg</FilePath>
+        <Coordinates precision="high">
+            <Latitude>55.7558</Latitude>
+            <Longitude>37.6176</Longitude>
+            <Altitude>120.5</Altitude>
+        </Coordinates>
+        <PhotoMetadata>
+            <Resolution>1920x1080</Resolution>
+            <FileSize>2.5MB</FileSize>
+            <Format>JPEG</Format>
+        </PhotoMetadata>
+    </Photo>
+</DroneTarget>

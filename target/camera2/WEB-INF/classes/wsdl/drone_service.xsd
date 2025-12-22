@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.example.com/drone/service"
+           xmlns:tns="http://www.example.com/drone/service"
+           elementFormDefault="qualified">
+
+    <!-- Элементы для операций -->
+    <xs:element name="GetDroneInfoRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="droneId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetDroneInfoResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="droneInfo" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="RegisterFineRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="droneId" type="xs:string"/>
+                <xs:element name="violation" type="xs:string"/>
+                <xs:element name="penalty" type="xs:double"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="RegisterFineResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetFinesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="droneId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetFinesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="fines" type="xs:string" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Fault элементы -->
+    <xs:element name="InvalidDroneIdFault">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="xs:string"/>
+                <xs:element name="droneId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ServiceUnavailableFault">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="xs:string"/>
+                <xs:element name="errorCode" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ValidationFault">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="xs:string"/>
+                <xs:element name="field" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

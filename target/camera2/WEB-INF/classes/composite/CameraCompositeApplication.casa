@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<composite xmlns="http://www.sun.com/jbi/descriptor/sun-application-descriptor"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.sun.com/jbi/descriptor/sun-application-descriptor http://www.sun.com/jbi/descriptor/sun-application-descriptor.xsd"
+          name="CameraCompositeApplication"
+          version="1.0">
+
+    <description>Composite Application для системы управления дронами и штрафами</description>
+
+    <!-- 1. Java EE Module (DroneService) - Сессионный компонент без состояния -->
+    <service-unit>
+        <identification>
+            <name>DroneServiceSU</name>
+            <description>Java EE модуль с веб-сервисом дронов (Stateless Session Bean)</description>
+        </identification>
+        <target>
+            <artifacts-zip>camera2.war</artifacts-zip>
+            <component-name>http-binding</component-name>
+        </target>
+        <provides>
+            <interface-name>http://www.example.com/drone/service#wsdl.interface(DroneServicePortType)</interface-name>
+        </provides>
+    </service-unit>
+
+    <!-- 2. BPEL Module - Бизнес-процесс обработки штрафов -->
+    <service-unit>
+        <identification>
+            <name>DroneFineProcessSU</name>
+            <description>BPEL модуль для обработки штрафов</description>
+        </identification>
+        <target>
+            <artifacts-zip>DroneFineProcess.zip</artifacts-zip>
+            <component-name>bpelserviceengine</component-name>
+        </target>
+        <provides>
+            <interface-name>http://www.example.com/bpel#wsdl.interface(DroneFinePT)</interface-name>
+        </provides>
+        <consumes>
+            <interface-name>http://www.example.com/drone/service#wsdl.interface(DroneServicePortType)</interface-name>
+        </consumes>
+    </service-unit>
+
+    <!-- 3. XSLT Service Engine Module - Трансформация данных о фотографиях -->
+    <service-unit>
+        <identification>
+            <name>PhotoTransformSU</name>
+            <description>XSLT модуль для трансформации данных о фотографиях</description>
+        </identification>
+        <target>
+            <artifacts-zip>XSLTModule.zip</artifacts-zip>
+            <component-name>xslt-service-engine</component-name>
+        </target>
+        <provides>
+            <interface-name>http://www.example.com/xslt#wsdl.interface(PhotoTransformPT)</interface-name>
+        </provides>
+    </service-unit>
+
+    <!-- 4. SQL Service Engine Module - Работа с базой данных -->
+    <service-unit>
+        <identification>
+            <name>DroneDataSQLSU</name>
+            <description>SQL модуль для работы с базой данных дронов</description>
+        </identification>
+        <target>
+            <artifacts-zip>SQLModule.zip</artifacts-zip>
+            <component-name>sql-service-engine</component-name>
+        </target>
+        <provides>
+            <interface-name>http://www.example.com/sql#wsdl.interface(DroneDataPT)</interface-name>
+        </provides>
+    </service-unit>
+
+    <!-- 5. SOAP Binding Component - Подключение по протоколу SOAP -->
+    <service-unit>
+        <identification>
+            <name>SOAPBCSU</name>
+            <description>SOAP Binding Component для подключения к BPEL процессу</description>
+        </identification>
+        <target>
+            <artifacts-zip>SOAPBC.zip</artifacts-zip>
+            <component-name>soap-binding</component-name>
+        </target>
+        <consumes>
+            <interface-name>http://www.example.com/bpel#wsdl.interface(DroneFinePT)</interface-name>
+        </consumes>
+    </service-unit>
+
+    <!-- 6. File Binding Component - Чтение/запись файлов -->
+    <service-unit>
+        <identification>
+            <name>FileBCSU</name>
+            <description>File Binding Component для чтения/записи файлов</description>
+        </identification>
+        <target>
+            <artifacts-zip>FileBC.zip</artifacts-zip>
+            <component-name>file-binding</component-name>
+        </target>
+        <consumes>
+            <interface-name>http://www.example.com/bpel#wsdl.interface(DroneFinePT)</interface-name>
+        </consumes>
+    </service-unit>
+
+    <!-- Связи между модулями -->
+    <!-- BPEL вызывает Java EE сервис -->
+    <connection>
+        <consumer service-unit="DroneFineProcessSU"/>
+        <provider service-unit="DroneServiceSU"/>
+    </connection>
+
+    <!-- SOAP BC вызывает BPEL процесс -->
+    <connection>
+        <consumer service-unit="SOAPBCSU"/>
+        <provider service-unit="DroneFineProcessSU"/>
+    </connection>
+
+    <!-- File BC вызывает BPEL процесс -->
+    <connection>
+        <consumer service-unit="FileBCSU"/>
+        <provider service-unit="DroneFineProcessSU"/>
+    </connection>
+
+    <!-- BPEL может использовать XSLT для трансформации -->
+    <connection>
+        <consumer service-unit="DroneFineProcessSU"/>
+        <provider service-unit="PhotoTransformSU"/>
+    </connection>
+
+    <!-- BPEL может использовать SQL для работы с БД -->
+    <connection>
+        <consumer service-unit="DroneFineProcessSU"/>
+        <provider service-unit="DroneDataSQLSU"/>
+    </connection>
+
+</composite>
+

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="http://www.example.com/xslt"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:dr="http://www.example.com/drone"
+             targetNamespace="http://www.example.com/xslt"
+             name="PhotoTransformService">
+
+    <types>
+        <xsd:schema targetNamespace="http://www.example.com/xslt"
+                    xmlns:tns="http://www.example.com/xslt"
+                    xmlns:dr="http://www.example.com/drone">
+            <xsd:import namespace="http://www.example.com/drone"
+                       schemaLocation="../wsdl/drone_target.xsd"/>
+            
+            <xsd:element name="TransformPhotoRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="dr:DroneTarget"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="TransformPhotoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="htmlReport" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <message name="TransformPhotoRequestMessage">
+        <part name="parameters" element="tns:TransformPhotoRequest"/>
+    </message>
+    
+    <message name="TransformPhotoResponseMessage">
+        <part name="parameters" element="tns:TransformPhotoResponse"/>
+    </message>
+
+    <portType name="PhotoTransformPT">
+        <operation name="transformPhotos">
+            <input message="tns:TransformPhotoRequestMessage"/>
+            <output message="tns:TransformPhotoResponseMessage"/>
+        </operation>
+    </portType>
+
+    <binding name="PhotoTransformBinding" type="tns:PhotoTransformPT">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="transformPhotos">
+            <soap:operation soapAction="http://www.example.com/xslt/transformPhotos"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="PhotoTransformService">
+        <port name="PhotoTransformPort" binding="tns:PhotoTransformBinding">
+            <soap:address location="http://localhost:8080/xslt/PhotoTransformService"/>
+        </port>
+    </service>
+
+</definitions>
+

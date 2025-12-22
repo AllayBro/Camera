@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+
+    <display-name>camera2</display-name>
+
+    <!-- JAX-RS (Jersey) -->
+    <servlet>
+        <servlet-name>JerseyWebApp</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jakarta.ws.rs.Application</param-name>
+            <param-value>org.example.camera.rest.ApplicationConfig</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>JerseyWebApp</servlet-name>
+        <url-pattern>/webresources/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- JAX-WS (Metro) регистрируется программно через JaxWsConfig -->
+
+</web-app>

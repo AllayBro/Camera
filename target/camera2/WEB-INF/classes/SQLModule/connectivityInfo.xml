@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connectivityInfo xmlns="http://www.sun.com/jbi/descriptor/connectivityInfo"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://www.sun.com/jbi/descriptor/connectivityInfo http://www.sun.com/jbi/descriptor/connectivityInfo.xsd">
+
+    <connection>
+        <jndiName>jdbc/camera2</jndiName>
+        <driver>org.h2.Driver</driver>
+        <url>jdbc:h2:mem:camera2;DB_CLOSE_DELAY=-1</url>
+        <username>sa</username>
+        <password></password>
+    </connection>
+
+</connectivityInfo>
+
